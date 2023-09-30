@@ -40,7 +40,7 @@ Each cell in the grid is either a wall, a road, or the goal. The environmental f
 
 ## Training
 
-As described in the first section, training is done using a Q-table, temporal difference, and the Bellman Equation. 
+As described in the first section, training is done using a Q-table, temporal difference, and the Bellman Equation. Check the code for more details.
 
 ## Result
 
