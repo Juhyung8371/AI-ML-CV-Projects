@@ -44,4 +44,20 @@ As described in the first section, training is done using a Q-table, temporal di
 
 ## Result
 
+The pathfinding algorithm works as intended.
 
+<img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/before_path.png?raw=true'>
+
+## Congestion Problem
+
+There is more than one robot working in a warehouse. If every robot takes the same optimal path, then that will cause a congestion problem. I will alleviate that issue by analyzing the road usage rate and adjusting the reward of each road based on its usage rate. For example, robots will be rewarded for using longer but less used roads.
+
+After adjusting the rewards, the right path's usage decreases up to 8, and that is transferred to the left path. This can alleviate some congestion problems in the right path.
+
+Usage rate before and after:
+
+<img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/before_usage.png?raw=true'> <img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/after_usage.png?raw=true'>
+
+Path change before and after:
+
+<img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/before_path.png?raw=true'> <img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/after_path.png?raw=true'>
