@@ -1,4 +1,4 @@
-# Project - Titanic
+# Project - Titanic Survivors Prediction
 
 The goal of this project is to predict the survivors of Titanic using the given passenger information. The following is the structure of this project:
 
