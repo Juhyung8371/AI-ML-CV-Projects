@@ -27,14 +27,67 @@ Gaze detection can also complement other human-computer interaction methods. A s
 
 ### A. Summary
 
+The proposed solution includes gaze detection for controlling a mouse pointer and blink detection for clicking. The input is the image of the user looking at the monitor, and the output is the mouse movement, clicking, and double-clicking. 
+
 ### B. Experimental Setup
+
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/setup.png' width=250>
+
+The figure above demonstrates the experimental setup. The user's face is approximately 60 cm away from the monitor and the webcam. The camera used for this experiment is HP TrueVision HD Camera with 1280×720 resolution, 30 frames per second capture rate, and auto-focus feature.
+
+There are some constraints for the setup to ensure accurate results:
+
+1. The camera must capture the user's full face. The ideal camera location is right above the computer monitor, at around the eye level of the user.
+2. The user and the camera must face each other - the face's roll, yaw, and pitch changes are not allowed. The user needs to center his face in the template shown below:
+
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/tilt.gif' width=300>
 
 ### C. Face Detection and Eye Region Extraction
 
+The proposed solution employs MediaPipe's face landmark detection model to detect the face and extract facial features. It detects faces in the image and adds landmarks to them in a 3D space, as shown below. These landmarks are used to extract the eye features for blink detection and gaze detection (see [the list of landmarks](https://github.com/tensorflow/tfjs-models/blob/ad17ade67add3e84fee0895c938ea4e1cd4d50e4/face-landmarks-detection/src/constants.ts)). Since the input image is taken 60 cm away from the user's face using an affordable webcam, which limits the amount and the quality of facial information, the solution required unique approaches described in the later sections.   
+
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/mediapipe_landmarks.jpg' width=300>
+
 ### D. Blink Detection
+
+The blink detection algorithm is an appearance-based method similar to the method from [[1]](#1). These are the steps for the blink-controlled mouse clicker algorithm:
+
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/fissure_size.png' width=300>
+
+1. Take the eye landmarks obtained from the MediaPipe face mesh.
+2. Take the ratio between the vertical and horizontal eyelid fissure size. The figure above shows that it is a ratio of CD/AB. I define this ratio as a blink ratio.
+3. Collect the blink ratios over time and identify the pattern that rises from a voluntary blink. Since more closed eyelids yield a higher blink ratio, the blink pattern should be low-high-low. In particular, I determined that 6 is an adequate threshold after hyperparameter tuning and data from [[13]](#13) (Horizontal fissure size averaged 25.8 mm (SD 2.4 mm) in men, and 25.1 mm (SD 2.1 mm) in women.)
+
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/blink_ratio.png' width=400>
+
+The figure above plots the gaze ratio over time. We can see that blinks are demonstrated as spikes in the plot. Therefore, I detected those single and double spikes in the plot and connected them to single-click and double-click features accordingly.
 
 ### E. Gaze Detection
 
+Gaze can move vertically and horizontally. The core idea behind my gaze detection method is to find the threshold points that will stay similar regardless of face size or facial movement. I determined that the nose landmarks are the most stable landmarks, so I referenced many threshold values based on the nose tip landmark.
+ 
+
+#### Horizontal Gaze
+
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/hor_thresh.jpg' width=350>
+
+The horizontal gaze is determined by checking whether the center point between pupils lies between the horizontal thresholds from the nose landmarks (44 and 274). For example, like the figure above, if the user looks left, his pupil center will shift past the left threshold. 
+
+#### Vertical Gaze
+
+Vertical gaze detection is a bit less intuitive than horizontal gaze detection. It's due to the limitation of MediaPipe face mesh. 
+
+
+
+
+calculate the y-ratio:
+I needed landmarks that will act as y-thresholds to capture the vertical motion of pupil.
+Unfortunately, MediaPipe face mesh's pupil landmark cannot capture that because
+the iris landmarks are always contained within the eye landmarks vertically.
+In other word, if the person looks up and the iris is pointed up, the entire eye landmarks will
+follow the iris instead of iris moving towards the top side of the eye landmarks.
+so I couldn't use pupil's relative position against the eye as the measure to determine its vertical motion.
+Nose is the part in the body the moves the least, do it will be a good reference point.
 
 ## Result
 
