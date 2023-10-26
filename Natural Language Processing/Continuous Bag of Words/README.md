@@ -31,7 +31,7 @@ We have to be careful that this result is simplified by PCA.
 
 ## Discussion
 
-There are a few challenges associated with CBOW, as explained here (https://spotintelligence.com/2023/07/27/continuous-bag-of-words/#How_can_you_overcoming_challenges_and_limitations_associated_with_the_CBOW_model):
+There are a few challenges associated with CBOW, as explained [here](https://spotintelligence.com/2023/07/27/continuous-bag-of-words/#How_can_you_overcoming_challenges_and_limitations_associated_with_the_CBOW_model):
 
 1. Handling Out-of-Vocabulary (OOV) Words
    - Subword embedding, where the unknown word is split into pieces for inference, can be used.
