@@ -91,7 +91,7 @@ NoseTop_to_NoseBottom will stay relatively the same all the time, whereas Nose_t
 
 <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/click.gif' width=700>
 
-I moved the mouse using my gaze and opened the file using double-blink. 
+I moved the mouse using my gaze and opened the file using double-blink. In terms of precision, I can click the Windows icon I want to click, but I can't reliably click between small characters (12pt font) in a text editor to put my cursor between characters. 
 
 ### More Evaluation
 
@@ -103,7 +103,7 @@ Some results worked as intended. Good.
 
 <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/result2.jpg' width=300> <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/result4.jpg' width=300>
 
-Some results say the user is looking away from the camera when they are facing the camera correctly. This is caused by the hard-coded rotation thresholds I set based on my facial features. 
+Some results say the user is looking away from the camera when facing it correctly. This is caused by the hard-coded rotation thresholds I set based on my facial features. 
 
 <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/result3.jpg' width=300>
 
@@ -111,41 +111,47 @@ This result says the user is looking down when he is looking right. This is also
 
 ## Discussion
 
-The major limitation of my solution is the lack of robustness. There are many hard-coded constants, such as threshold values, that are fine-tuned for my face. To solve this problem, I can:
+The major limitation of my solution is the need for more robustness. Many hard-coded constants, such as threshold values, are fine-tuned for my face. To solve this problem, I can:
 
-1. Introduce a calibration session to collect the user's unique facial features. For instance, I can ask the user to look up, down, left, and right to collect the appropriate thresholds. I can also do some non-intrusive calibration during runtime occasionally to reinforce the calibration.
+1. Introduce a calibration session to collect the user's unique facial features. For instance, I can ask the user to look up, down, left, and right to collect the appropriate thresholds. I can also occasionally do some non-intrusive calibration during runtime to reinforce the calibration.
    
-2. Create a machine learning model that can determine the gaze direction. As I discussed in the Literature Review section, machine learning can be a robust and reliable solution. However, it will require a lot of training data.
+2. Create a machine learning model that can determine the gaze direction. As the Literature Review section discusses, machine learning can be a robust and reliable solution. However, it will require a lot of training data.
 
-Despite its shortcomings, my solution demonstrates that gaze is a feasible method of human-computer interaction. 
+There are some usability issues, too:
+
+1. The mouse control could be more precise. As I said, it needs to be more precise to click between small characters, which means it cannot assist users with text editing tasks like writing an email. I can make the mouse movement more precise by making the cursor slower. However, that will reduce the usability since the user will have to look away from the screen longer.
+   
+2. Head movement is quite restricted. Although a certain level of restriction is required to ensure the quality of face feature data, it's hard to fix the face in one spot for too long. I can adaptively update the threshold values based on the head movement to accommodate more various head positions. For example, if the user is slightly looking to the right, I can slightly shift the thresholds to the left.
+ 
+Despite its shortcomings, my solution demonstrates that gaze is a feasible human-computer interaction method. It's reliable and comfortable for tasks that don't require very precise movements.
 
 ## References
 
 <a id="1">[1]</a> 
-Neogi, Debosmit, Nataraj Das, and Suman Deb. ``BLINK-CON: A HANDS FREE MOUSE POINTER CONTROL WITH EYE GAZE TRACKING.'' 2021 IEEE Mysore Sub Section International Conference (MysuruCon). Piscataway: IEEE, 2021. 50–57. Web.
+Neogi, Debosmit, Nataraj Das, and Suman Deb. "BLINK-CON: A HANDS FREE MOUSE POINTER CONTROL WITH EYE GAZE TRACKING." 2021 IEEE Mysore Sub Section International Conference (MysuruCon). Piscataway: IEEE, 2021. 50–57. Web.
 
 <a id="2">[2]</a> 
-Ghani, Muhammad Usman et al. ``GazePointer: A Real Time Mouse Pointer Control Implementation Based on Eye Gaze Tracking.'' INMIC. IEEE, 2013. 154–159. Web.
+Ghani, Muhammad Usman et al. "GazePointer: A Real Time Mouse Pointer Control Implementation Based on Eye Gaze Tracking." INMIC. IEEE, 2013. 154–159. Web.
 
-<a id="3">[3]</a> Park, Seonwook, Adrian Spurr, and Otmar Hilliges. ``Deep Pictorial Gaze Estimation.'' arXiv.org. Ithaca: Cornell University Library, arXiv.org, 2018. Web.
+<a id= "3">[3]</a> Park, Seonwook, Adrian Spurr, and Otmar Hilliges. "Deep Pictorial Gaze Estimation." arXiv.org. Ithaca: Cornell University Library, arXiv.org, 2018. Web.
 
-<a id="4">[4]</a> K. Cortacero, T. Fischer and Y. Demiris, ``RT-BENE: A Dataset and Baselines for Real-Time Blink Estimation in Natural Environments,'' 2019 IEEE/CVF International Conference on Computer Vision Workshop (ICCVW), Seoul, Korea (South), 2019, pp. 1159-1168, doi: 10.1109/ICCVW.2019.00147.
+<a id= "4">[4]</a> K. Cortacero, T. Fischer and Y. Demiris, "RT-BENE: A Dataset and Baselines for Real-Time Blink Estimation in Natural Environments," 2019 IEEE/CVF International Conference on Computer Vision Workshop (ICCVW), Seoul, Korea (South), 2019, pp. 1159-1168, doi: 10.1109/ICCVW.2019.00147.
 
-<a id="5">[5]</a> Zhang, Xucong et al.``It’s Written All Over Your Face: Full-Face Appearance-Based Gaze Estimation.'' arXiv.org. Ithaca: Cornell University Library, arXiv.org, 2023. Web.
+<a id= "5">[5]</a> Zhang, Xucong et al. "It's Written All Over Your Face: Full-Face Appearance-Based Gaze Estimation." arXiv.org. Ithaca: Cornell University Library, arXiv.org, 2023. Web.
 
 <a id="6">[6]</a> Alnajar, F et al. ``Auto-Calibrated Gaze Estimation Using Human Gaze Patterns.'' International journal of computer vision 124.2 (2017): 223–236. Web.
 
-<a id="7">[7]</a> Fuhl, Wolfgang et al. ``Pupil Detection for Head-Mounted Eye Tracking in the Wild: An Evaluation of the State of the Art.'' Machine vision and applications 27.8 (2016): 1275–1288. Web.
+<a id= "7">[7]</a> Fuhl, Wolfgang et al. "Pupil Detection for Head-Mounted Eye Tracking in the Wild: An Evaluation of the State of the Art." Machine vision and applications 27.8 (2016): 1275–1288. Web.
 
-<a id="8">[8]</a> Acartürk, Cengiz et al. “Elderly Speech-Gaze Interaction - State of the Art and Challenges for Interaction Design.” Interacción (2015).
+<a id= "8">[8]</a> Acartürk, Cengiz et al. "Elderly Speech-Gaze Interaction - State of the Art and Challenges for Interaction Design." Interacción (2015).
 
-<a id="9">[9]</a> George, Anjith, and Aurobinda Routray. ``Fast and Accurate Algorithm for Eye Localisation for Gaze Tracking in Low-Resolution Images.'' IET computer vision 10.7 (2016): 660–669. Web.
+<a id="9">[9]</a> George, Anjith, and Aurobinda Routray. "Fast and Accurate Algorithm for Eye Localisation for Gaze Tracking in Low-Resolution Images." IET computer vision 10.7 (2016): 660–669. Web.
 
 <a id="10">[10]</a> Krafka, Kyle et al. ``Eye Tracking for Everyone.'' 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR). IEEE, 2016. 2176–2184. Web.
 
-<a id="11">[11]</a> Leblond-Menard, C, and S Achiche. ``Non-Intrusive Real Time Eye Tracking Using Facial Alignment for Assistive Technologies.'' IEEE transactions on neural systems and rehabilitation engineering PP (2023): 1–1. Web.
+<a id="11">[11]</a> Leblond-Menard, C, and S Achiche. "Non-Intrusive Real Time Eye Tracking Using Facial Alignment for Assistive Technologies." IEEE transactions on neural systems and rehabilitation engineering PP (2023): 1–1. Web.
 
-<a id="12">[12]</a> Kar, Anuradha, and Peter Corcoran. ``A Review and Analysis of Eye-Gaze Estimation Systems, Algorithms and Performance Evaluation Methods in Consumer Platforms.'' IEEE access 5 (2017): 16495–16519. Web.
+<a id="12">[12]</a> Kar, Anuradha, and Peter Corcoran. "A Review and Analysis of Eye-Gaze Estimation Systems, Algorithms and Performance Evaluation Methods in Consumer Platforms." IEEE access 5 (2017): 16495–16519. Web.
 
-<a id="13">[13]</a> van den Bosch, Willem A, Ineke Leenders, and Paul Mulder. ``Topographic Anatomy of the Eyelids, and the Effects of Sex and Age.'' British journal of ophthalmology 83.3 (1999): 347–352. Web.
+<a id="13">[13]</a> van den Bosch, Willem A, Ineke Leenders, and Paul Mulder. "Topographic Anatomy of the Eyelids, and the Effects of Sex and Age." British journal of ophthalmology 83.3 (1999): 347–352. Web.
 
