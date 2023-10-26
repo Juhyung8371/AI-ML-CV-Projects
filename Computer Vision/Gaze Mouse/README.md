@@ -35,7 +35,7 @@ The proposed solution includes gaze detection for controlling a mouse pointer an
 
 The figure above demonstrates the experimental setup. The user's face is approximately 60 cm away from the monitor and the webcam. The camera used for this experiment is HP TrueVision HD Camera with 1280×720 resolution, 30 frames per second capture rate, and auto-focus feature.
 
-There are some constraints for the setup to ensure accurate results:
+There are some constraints for the setup to ensure accurate results: 
 
 1. The camera must capture the user's full face. The ideal camera location is right above the computer monitor, at around the eye level of the user.
 2. The user and the camera must face each other - the face's roll, yaw, and pitch changes are not allowed. The user needs to center his face in the template shown below:
@@ -44,9 +44,12 @@ There are some constraints for the setup to ensure accurate results:
 
 ### C. Face Detection and Eye Region Extraction
 
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/mediapipe_landmarks.jpg' width=300 align='right'>
+
 The proposed solution employs MediaPipe's face landmark detection model to detect the face and extract facial features. It detects faces in the image and adds landmarks to them in a 3D space, as shown below. These landmarks are used to extract the eye features for blink detection and gaze detection (see [the list of landmarks](https://github.com/tensorflow/tfjs-models/blob/ad17ade67add3e84fee0895c938ea4e1cd4d50e4/face-landmarks-detection/src/constants.ts)). Since the input image is taken 60 cm away from the user's face using an affordable webcam, which limits the amount and the quality of facial information, the solution required unique approaches described in the later sections.   
 
-<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/mediapipe_landmarks.jpg' width=300>
+
+As a side note, I initially attempted them using the dlib face recognition model. However, it was too weak for my application. For example, it only has 68 facial landmarks, does not detect iris, is weak against change in illumination, has trouble recognizing faces with accessories on, etc. Also, since it did not have iris landmarks, I needed to detect the iris using computer vision techniques such as thresholding and segmentation, which introduced extra layers of complexity and computational load.
 
 ### D. Blink Detection
 
@@ -66,7 +69,6 @@ The figure above plots the gaze ratio over time. We can see that blinks are demo
 
 Gaze can move vertically and horizontally. The core idea behind my gaze detection method is to find the threshold points that will stay similar regardless of face size or facial movement. I determined that the nose landmarks are the most stable landmarks, so I referenced many threshold values based on the nose tip landmark.
  
-
 #### Horizontal Gaze
 
 <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/hor_thresh.jpg' width=350>
@@ -75,26 +77,47 @@ The horizontal gaze is determined by checking whether the center point between p
 
 #### Vertical Gaze
 
-Vertical gaze detection is a bit less intuitive than horizontal gaze detection. It's due to the limitation of MediaPipe face mesh. 
+Vertical gaze detection is a bit less intuitive than horizontal gaze detection. I cannot use the pupil's relative position against the eye to determine its vertical position. It's due to the limitation of MediaPipe face mesh: the iris landmarks always stay within the eye fissure landmarks. In other words, if the person looks up and the iris moves up, the entire eye landmarks will follow the iris instead of just the iris moving up. See the figures below to check this in action.
 
+So, instead of using the pupil's relative position against the eye fissure as the measure to determine its vertical motion, I measured its distance to the tip of the nose. To be more accurate, I measure the following ratio:
 
+> ratio = Nose_to_pupil / NoseTop_to_NoseBottom
 
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/up.gif' height=350> <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/ver_thresh.jpg' height=350>
 
-calculate the y-ratio:
-I needed landmarks that will act as y-thresholds to capture the vertical motion of pupil.
-Unfortunately, MediaPipe face mesh's pupil landmark cannot capture that because
-the iris landmarks are always contained within the eye landmarks vertically.
-In other word, if the person looks up and the iris is pointed up, the entire eye landmarks will
-follow the iris instead of iris moving towards the top side of the eye landmarks.
-so I couldn't use pupil's relative position against the eye as the measure to determine its vertical motion.
-Nose is the part in the body the moves the least, do it will be a good reference point.
+NoseTop_to_NoseBottom will stay relatively the same all the time, whereas Nose_to_pupil will change depending on the vertical position of the iris. 
 
 ## Result
 
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/click.gif' width=700>
 
+I moved the mouse using my gaze and opened the file using double-blink. 
+
+### More Evaluation
+
+I tested the solution with test images, and the following are the results:
+
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/result1.jpg' width=300> <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/result5.jpg' width=300>
+
+Some results worked as intended. Good.
+
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/result2.jpg' width=300> <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/result4.jpg' width=300>
+
+Some results say the user is looking away from the camera when they are facing the camera correctly. This is caused by the hard-coded rotation thresholds I set based on my facial features. 
+
+<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/result3.jpg' width=300>
+
+This result says the user is looking down when he is looking right. This is also caused by the hard-coded directional thresholds I set based on my facial features. 
 
 ## Discussion
 
+The major limitation of my solution is the lack of robustness. There are many hard-coded constants, such as threshold values, that are fine-tuned for my face. To solve this problem, I can:
+
+1. Introduce a calibration session to collect the user's unique facial features. For instance, I can ask the user to look up, down, left, and right to collect the appropriate thresholds. I can also do some non-intrusive calibration during runtime occasionally to reinforce the calibration.
+   
+2. Create a machine learning model that can determine the gaze direction. As I discussed in the Literature Review section, machine learning can be a robust and reliable solution. However, it will require a lot of training data.
+
+Despite its shortcomings, my solution demonstrates that gaze is a feasible method of human-computer interaction. 
 
 ## References
 
