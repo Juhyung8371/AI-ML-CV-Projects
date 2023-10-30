@@ -85,7 +85,7 @@ So, instead of using the pupil's relative position against the eye fissure as th
 
 <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/up.gif' height=350> <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/ver_thresh.jpg' height=350>
 
-NoseTop_to_NoseBottom will stay relatively the same all the time, whereas Nose_to_pupil will change depending on the vertical position of the iris. 
+NoseTop_to_NoseBottom will stay relatively the same all the time, whereas Nose_to_pupil will change depending on the vertical position of the iris.
 
 ## Result
 
