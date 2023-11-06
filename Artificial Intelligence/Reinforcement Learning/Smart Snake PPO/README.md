@@ -6,13 +6,14 @@ Created a self-learning AI for Snake using deep reinforcement learning, particul
 
 # Objective
 
-This project aims to explore deep-reinforcement learning and apply the knowledge to create my own self-learning AI agent. I chose the [Snake](https://en.wikipedia.org/wiki/Snake_(video_game_genre)) game because it is "Easy to Learn, Difficult to Master" (a.k.a [Bushnell's Law](https://en.wikipedia.org/wiki/Bushnell%27s_Law)). I was curious if it's true for AIs as well. 
+This project aims to explore deep-reinforcement learning and apply the knowledge to create my own self-learning AI agent. I chose the [Snake](https://en.wikipedia.org/wiki/Snake_(video_game_genre)) game because it is ["Easy to Learn, Difficult to Master"](https://en.wikipedia.org/wiki/Bushnell%27s_Law). I was curious if it's true for AIs as well. 
 
 # Methodology
 
 ## Model Selection
 
 <img src="readme_image/rl_algorithms.png" width="600">
+
 [Image source](https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html)
 
 There are a variety of reinforcement learning (RL) algorithms. Above diagram shows some examples of RL taxonomy. 
@@ -99,9 +100,9 @@ To enable the agent to make connections between rewards and relevant information
 
 I had to experiment how adding or removing each information affects the agent's behavior. For example, above is the result from playing around with the number of past moves an agent can remember. The left graphs is the average game runtime, and the right graph is the average reward in a game with 20x20 grid. 
 
-The agent starts the game with a lot of exploration, illustrated by the big spike in the game length graph. The agent does not gain much reward from this stage because I did not reward exploration during this test. Eventually, around 1.5M steps in, the exploration is over and the average steps per game converges to around 130, while the reward starts to slowly increase, converging to 1700 rewards per game (score of 15). 
+The agent starts the game with a lot of exploration, illustrated by the big spike in the game length graph. However, the agent does not gain much reward from this stage because I did not reward exploration during this test. Eventually, around 1M steps in, the exploration is over and the average steps per game converges to around 130, while the reward starts to slowly increase, converging to 1700 rewards per game (score of 15). 
 
-I tested 5, 20, 70 and 200 recent moves, and ran each of them for about 1.5M steps (I ran 200-moves one 7M steps just in case). Surprisingly, the number of recent moves did not change the agent's learning behavior too much. Possible explanations are:
+I tested 5, 20, 70 and 200 recent moves, and ran each of them for about 1.5M steps (I ran 200-moves one 6M steps just in case). Surprisingly, the number of recent moves did not change the agent's learning behavior too much. Possible explanations are:
 
 1. I didn't give the agents enough time to learn despite the change in agent complexity.
 2. The 'past moves' information was not important in learning.
@@ -129,7 +130,15 @@ PPO has quite a few hyperparameters, and each of them affect the agent's behavio
 
 ### Learning Rate
 
+<img src="readme_image/lr_comparison.png" width="500">
+
+I played around with learning rate to observe its effect on agent's behavior. Green is lr=0.00003 and Red is lr=0.003. As expected, higher learning rate yielded a faster result. If Green was given enough time, it might have yielded a better result than Red. However, since time and performance is a trade-off, Green is too slow. 
+
 ### Entropy Coefficient
+
+<img src="readme_image/ent_coeff_comparison.png" width="500">
+
+I played around with entropy coefficient to observe its effect on agent's behavior. Orange is ent_coeff=0.001 and Gray is ent_coeff=0.1. I thought higher entropy coefficient would encourage exploration, but I was quite the opposite for this test. Maybe 0.1 was too much encouragement for randomness, that the Gray agent's decisions were contaminated by noises.
 
 # Result
 
