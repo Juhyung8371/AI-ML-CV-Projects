@@ -15,7 +15,7 @@ This project aims to explore deep-reinforcement learning and apply the knowledge
 <img src="readme_image/rl_algorithms.png" width="600">
 [Image source](https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html)
 
-There are a variety of reinforcement learning (RL) algorithms. Above diagram shows some examples of RL taxonomy. Here is my understanding of each category:
+There are a variety of reinforcement learning (RL) algorithms. Above diagram shows some examples of RL taxonomy. 
 
 ### What is model in RL? Model-based vs. Model-free 
 
@@ -49,7 +49,7 @@ These are some popular RL algorithm choices when it comes to video games:
 3. Proximal Policy Optimization (PPO):
     * PPO is known for its stability and good sample efficiency, making it a strong choice for training agents in various environments. It can also be effective in the Snake game.
 
-I'm running this program in a laptop with a not too powerful CPU (Ryzen 3 3200U). Therefore, I went with PPO for its stability and sample efficiency. 
+I'm running this program in a laptop with a not too powerful CPU (Ryzen 3 3200U). Therefore, I went with PPO for its stability and sample efficiency. I used [Stable Baseline3](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html)'s PPO implementation because it was easy to use.
 
 ## Reward Shaping
 
@@ -59,13 +59,13 @@ The reward system defines the goals for the agent and guides it in learning the 
 
 Check the below table for the characteristics of sparse and dense rewards:   
 
-|                     |             Sparse              |         Dense          |
-|:-------------------:|:-------------------------------:|:----------------------:|
-| Feedback Frequency  |             Delayed             |       Immediate        |
-|   Learning Speed    |             Slower              |         Faster         |
-| Encouraged Behavior |           Exploration           |      Exploitation      |
-|       Example       | Rewarded at the end of the game |  Rewarded every move   |
-| Potential Downside  |    Uncertain decision-making    | Biased decision-making |
+|                     |         Sparse Rewards          |    Dense Rewards    |
+|:-------------------:|:-------------------------------:|:-------------------:|
+| Feedback Frequency  |             Delayed             |      Immediate      |
+|   Learning Speed    |             Slower              |       Faster        |
+| Encouraged Behavior |           Exploration           |    Exploitation     |
+|       Example       | Rewarded at the end of the game | Rewarded every move |
+| Potential Downside  |         Uncertain agent         |    Biased agent     |
 
 It's important to find the balance between them. For example, the survival reward should be substantial enough to encourage safe movements, but not so high that the agent does not find apples rewarding. Similarly, the time penalties should be applied in a way that encourages efficient gameplay without overly punishing the snake for exploring and making smart moves.
 
@@ -83,12 +83,53 @@ Intermediate Feedback:
 1. Distance to apple (+ for closer)
 2. Distance to tail (+ for further)
 
-## hyperparameter tuning
+## Agent's Observations
 
-## libraries
+To enable the agent to make connections between rewards and relevant information in the Snake game, it needs access to essential game state information (called 'observation' in stable baseline3). Below is a list some of my considerations. More information can yield more sophisticated behavior, but it can also cause longer training time.
 
-developing a reusable environment with parallel computing capabilities.
+1. Snake head position
+2. Snake body positions / tail position
+3. Apple position / distance to apple
+4. Past moves
+5. Map boundaries
+6. Movement direction
+7. Score (snake length)
 
+<img src="readme_image/memory_comparison_length.png" height="300"> <img src="readme_image/memory_comparison_reward.png" height="300">
+
+I had to experiment how adding or removing each information affects the agent's behavior. For example, above is the result from playing around with the number of past moves an agent can remember. The left graphs is the average game runtime, and the right graph is the average reward in a game with 20x20 grid. 
+
+The agent starts the game with a lot of exploration, illustrated by the big spike in the game length graph. The agent does not gain much reward from this stage because I did not reward exploration during this test. Eventually, around 1.5M steps in, the exploration is over and the average steps per game converges to around 130, while the reward starts to slowly increase, converging to 1700 rewards per game (score of 15). 
+
+I tested 5, 20, 70 and 200 recent moves, and ran each of them for about 1.5M steps (I ran 200-moves one 7M steps just in case). Surprisingly, the number of recent moves did not change the agent's learning behavior too much. Possible explanations are:
+
+1. I didn't give the agents enough time to learn despite the change in agent complexity.
+2. The 'past moves' information was not important in learning.
+3. The reward structure did not represent the goal of the game.
+
+More testing is required to understand this behavior. 
+
+## Hyperparameter Tuning
+
+PPO has quite a few hyperparameters, and each of them affect the agent's behavior differently. Check [stable baseline3](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html)'s implementation, too. Below table explains some important hyperparameters:
+
+| Hyperparameter                  | Description                                                     | Effect of Change                                                                        | Common Range/Value                |
+|---------------------------------|-----------------------------------------------------------------|-----------------------------------------------------------------------------------------|-----------------------------------|
+| **Learning Rate (lr)**          | Step size for policy optimization.                              | Influences the speed of learning.                                                       | 1e-5 to 1e-3                      |
+| **Clip Parameter (clip_epsilon)** | Maximum allowed policy change ratio.                            | Stabilizes training by limiting policy updates.                                         | 0.2                               |
+| **Number of Epochs (n_epochs)** | Number of times data is reused for updates.                     | More epochs can lead to more stable policy updates.                                     | 1 to 10                           |
+| **Batch Size (batch_size)**     | Number of samples in each policy update.                        | Larger batch sizes may yield more accurate gradient estimates.                          | Varies                            |
+| **Value Function Coefficient (vf_coef)** | Weight of the value function loss.                              | Controls the balance between policy and value updates.                                  | 0.5                               |
+| **Entropy Coefficient (ent_coef)** | Weight of the entropy term.                                     | Influences the level of exploration in the policy.                                      | 0.01                              |
+| **Discount Factor (gamma)**     | Trade-off between immediate and future rewards.                 | Higher value favors long-term rewards.                                                  | 0.99                              |
+| **GAE Lambda (gae_lambda)**     | Controls weight of accumulated rewards in advantage estimation. | Adjusts the impact of the GAE calculation on the advantage.                             | 0.95                              |
+| **Number of Parallel Environments** | Number of parallel workers (if used).                           | Impacts training speed and stability.                                                   | Varies. I went with 4.            |
+| **Network Architecture**        | Design of policy and value function networks.                   | Influences the complexity of the model and its ability to capture patterns in the data. | Varies. I went with MlpPolicy.    |
+| **Optimization Algorithm**      | Choice of optimization algorithm (ex., Adam, RMSprop).          | Affects convergence speed and stability.                                                | Varies. Adam in stable baseline3. |
+
+### Learning Rate
+
+### Entropy Coefficient
 
 # Result
 
@@ -96,6 +137,6 @@ developing a reusable environment with parallel computing capabilities.
 
 # Discussion
 
-* What i achieved
+* What I achieved
 * Limitations
 * Future works
