@@ -12,6 +12,7 @@ This project aims to explore deep-reinforcement learning and apply the knowledge
 
 ## Model Selection
 
+<img src="readme_image/rl_algorithms.png">
 
 
 There are a variety of RL algorithms. 
