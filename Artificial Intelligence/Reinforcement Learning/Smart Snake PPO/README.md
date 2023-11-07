@@ -148,14 +148,21 @@ I played around with entropy coefficient to observe its effect on agent's behavi
 
 There is an infallible non-RL solution for Snake game. The snake can simply follow a Hamiltonian Cycle, a cyclic path that passes every square on the grid without crossing itself. This is a trivial solution, but it can be a good reference to measure my snake agent's performance. 
 
-I'll calculate the expected average steps per completed game. 
-> N = the grid size
-> 
-> L = the snake's length
-> 
-> $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
-> 
-> 
+I'll calculate the expected average steps per completed game. I'll assume that the average steps required to eat apple at any point is half of the number of remaining unoccupied cells.
+
+Let's define some variables first:
+* N = the grid size
+* L = the snake's length
+* m = the snake's starting length, where m < N^2
+
+Then,
+> Sum of all steps = $$ \sum_{L=m}^N^2 \left( \frac{N^2-L}{2} \right) $$
+
+Now, change it into an integration and take a limit to get the final answer:
+
+> $$\displaystyle \lim_{L \to \infty} \int_{m}^{N^2} \frac{N^2-L}{2} dL$$
+
+> $$ frac{N^4}{4} $$
 
 # Discussion
 
