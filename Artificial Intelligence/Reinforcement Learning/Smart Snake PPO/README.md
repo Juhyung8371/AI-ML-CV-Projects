@@ -96,7 +96,7 @@ To enable the agent to make connections between rewards and relevant information
 6. Movement direction
 7. Score (snake length)
 
-<img src="readme_image/memory_comparison_length.png" height="300"> <img src="readme_image/memory_comparison_reward.png" height="300">
+<img src="readme_image/memory_comparison_length.png" height="200"> <img src="readme_image/memory_comparison_reward.png" height="200">
 
 I had to experiment how adding or removing each information affects the agent's behavior. For example, above is the result from playing around with the number of past moves an agent can remember. The left graphs is the average game runtime, and the right graph is the average reward in a game with 20x20 grid. 
 
@@ -130,13 +130,13 @@ PPO has quite a few hyperparameters, and each of them affect the agent's behavio
 
 ### Learning Rate
 
-<img src="readme_image/lr_comparison.png" width="500">
+<img src="readme_image/lr_comparison.png" height="200">
 
 I played around with learning rate to observe its effect on agent's behavior. Green is lr=0.00003 and Red is lr=0.003. As expected, higher learning rate yielded a faster result. If Green was given enough time, it might have yielded a better result than Red. However, since time and performance is a trade-off, Green is too slow. 
 
 ### Entropy Coefficient
 
-<img src="readme_image/ent_coeff_comparison.png" width="500">
+<img src="readme_image/ent_coeff_comparison.png" height="200">
 
 I played around with entropy coefficient to observe its effect on agent's behavior. Orange is ent_coeff=0.001 and Gray is ent_coeff=0.1. I thought higher entropy coefficient would encourage exploration, but I was quite the opposite for this test. Maybe 0.1 was too much encouragement for randomness, that the Gray agent's decisions were contaminated by noises.
 
