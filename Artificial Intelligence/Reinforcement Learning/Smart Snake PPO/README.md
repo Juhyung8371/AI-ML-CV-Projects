@@ -155,14 +155,13 @@ Let's define some variables first:
 * L = the snake's length
 * m = the snake's starting length, where m < N^2
 
-Then,
-> Sum of all steps = $$ \sum_{L=m}^N^2 \left( \frac{N^2-L}{2} \right) $$
-
-Now, change it into an integration and take a limit to get the final answer:
-
+Then, the average total steps per game would be:
 > $$\displaystyle \lim_{L \to \infty} \int_{m}^{N^2} \frac{N^2-L}{2} dL$$
 
-> $$ frac{N^4}{4} $$
+Solving it give:
+> Ave. steps per run = $$ \frac{N^4}{4} $$
+
+I double-checked the math using step_test.py,
 
 # Discussion
 
