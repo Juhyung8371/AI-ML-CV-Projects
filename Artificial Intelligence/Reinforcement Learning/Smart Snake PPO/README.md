@@ -142,7 +142,20 @@ I played around with entropy coefficient to observe its effect on agent's behavi
 
 # Result
 
-* Evaluation
+## Evaluation
+
+### Evaluation Criteria Based on a Non-RL Solution
+
+There is an infallible non-RL solution for Snake game. The snake can simply follow a Hamiltonian Cycle, a cyclic path that passes every square on the grid without crossing itself. This is a trivial solution, but it can be a good reference to measure my snake agent's performance. 
+
+I'll calculate the expected average steps per completed game. 
+> N = the grid size
+> 
+> L = the snake's length
+> 
+> $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
+> 
+> 
 
 # Discussion
 
