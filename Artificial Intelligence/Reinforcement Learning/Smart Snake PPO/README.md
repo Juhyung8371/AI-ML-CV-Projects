@@ -151,7 +151,7 @@ I'll calculate the expected average steps per completed game. I'll assume that t
 Let's define some variables first:
 * N = the grid size
 * L = the snake's length
-* m = the snake's starting length, where m < $$N^2$$
+* m = the snake's starting length, where m < N<sup>2</sup> 
 
 Then, the average total steps per game would be:
 > $$\displaystyle \lim_{L \to \infty} \int_{m}^{N^2} \frac{N^2-L}{2} dL$$
@@ -159,7 +159,7 @@ Then, the average total steps per game would be:
 Solving it gives:
 > $$\frac{N^4}{4}$$
 
-I double-checked this approach by calculating them manually (step_test.py). I found that this equation a bad estimator for smaller maps (N < 7) where it gives 0.50-0.90 accuracy. However, the accuracy is over 0.95 for N > 10 and over 0.99 for N > 23, which is good to use.
+I double-checked this approach by calculating them manually (step_test.py). I found that this equation a bad estimator for smaller maps (N < 7) where it gives accuracy under 0.90. However, the accuracy is over 0.95 for N > 10 and over 0.99 for N > 23, which is good to use.
 
 ## Evaluation
 
