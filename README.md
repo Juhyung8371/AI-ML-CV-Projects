@@ -3,7 +3,7 @@
 This repository is a collection of various Artificial Intelligence (AI), Machine Learning (ML), and Computer Vision (CV) projects. 
 
 # Highlights
-
+ 
 ## Computer Vision
 
 <img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Computer%20Vision/Gaze%20Mouse/images/click.gif' width=700>
