@@ -86,15 +86,32 @@ Intermediate Feedback:
 
 ## Agent's Observations
 
-To enable the agent to make connections between rewards and relevant information in the Snake game, it needs access to essential game state information (called 'observation' in stable baseline3). Below is a list some of my considerations. More information can yield more sophisticated behavior, but it can also cause longer training time.
+To enable the agent to make connections between rewards and relevant information in the Snake game, it needs access to essential game state information (called 'observation' in stable baseline3). More information can yield more sophisticated behavior, but it can also cause longer training time. Also, I noticed that the agent usually learned better from simpler information like boolean than complex ones like number.
+
+Below is a list some of my considerations:
 
 1. Snake head position
 2. Snake body positions / tail position
-3. Apple position / distance to apple
+3. Apple position / distance to apple / direction to apple
 4. Past moves
+   * I considered using some memory system like LSTM but did not implement it because it was too much work.
 5. Map boundaries
 6. Movement direction
 7. Score (snake length)
+8. Evaluation of future actions
+   * I added boolean 'collision' to check which future actions can cause a collision.
+   * I added boolean 'visited' to check which future actions lead the snake to a cell that's been visited already. Hopefully, the snake realizes that re-visiting somewhere is a not too efficient move.
+9. Evaluation of current body positions
+   * I added a boolean 'trapped' info to check if there are any unreachable voids in the map isolated by the snake bodies. Hopefully, the agent realizes that making voids in the map is a bad move. 
+
+
+
+------------------------
+interesting findings
+1. exploration is not encouraged with penalty for not exploring. It seems to rather make the agent timid. As long as there is a penalty for making redundant moves, any amount of exploration reward didn't make the agent more adventurous.
+
+   -----------------------
+   
 
 <img src="readme_image/memory_comparison_length.png" height="200"> <img src="readme_image/memory_comparison_reward.png" height="200">
 
