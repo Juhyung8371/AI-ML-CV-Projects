@@ -54,11 +54,24 @@ I'm running this program in a laptop with a not too powerful CPU (Ryzen 3 3200U)
 
 ## Reward Shaping
 
-The reward system defines the goals for the agent and guides it in learning the desired behavior. Well-balanced rewards are critical in finding the desired outcome. There are a few things to consider when it comes to reward shaping:
+The reward system defines the goals for the agent and guides it in learning the desired behavior. Well-balanced rewards are critical in finding the desired outcome. There are quite a few things to consider here.
 
-### Reward Density (frequency)
+### Premature Convergence
 
-Check the below table for the characteristics of sparse and dense rewards:   
+The first thing we need to consider is avoiding [premature convergence](https://machinelearningmastery.com/premature-convergence/). It refers to the situation where the agent is stuck at a suboptimal solution and fail to improve further. One of its main cause is the lack of exploration. The agent may refuse to explore and learn new things if it's not worth it - either the exploration is too risky or the exploitation is too good. 
+
+### Exploration vs. Exploitation
+
+We want our agent to make the most informed decisions, and that information is gained from exploration. To encourage exploration, we have to make it rewarding. One way to achieve that is implementing intrinsic rewards, such as rewards for new discoveries and improved knowledge. See this [page](https://lilianweng.github.io/posts/2020-06-07-exploration-drl/) for much more in-depth explanation of exploration in RL. 
+
+Exploitation is not always a bad thing. It means the agent found a good plan to maximize the reward. However, it becomes a problem when intrinsic rewards are exploited. One of the example of this is called 'the noisy-tv problem.' It happens when the agent finds a source of randomness in the environment and continuously harvest intrinsic rewards. 
+
+<img src='readme_image/noisy_tv.gif'>
+
+exploration is not encouraged with penalty for not exploring. It seems to rather make the agent timid. As long as there is a penalty for making redundant moves, any amount of exploration reward didn't make the agent more adventurous.
+
+
+### Reward Density 
 
 |                     |         Sparse Rewards          |    Dense Rewards    |
 |:-------------------:|:-------------------------------:|:-------------------:|
@@ -68,11 +81,17 @@ Check the below table for the characteristics of sparse and dense rewards:
 |       Example       | Rewarded at the end of the game | Rewarded every move |
 | Potential Downside  |         Uncertain agent         |    Biased agent     |
 
-It's important to find the balance between them. For example, the survival reward should be substantial enough to encourage safe movements, but not so high that the agent does not find apples rewarding. Similarly, the time penalties should be applied in a way that encourages efficient gameplay without overly punishing the snake for exploring and making smart moves.
+It's important to balance the reward density. For example, the survival reward should be substantial enough to encourage safe movements, but not so high that the agent does not find apples rewarding. Similarly, the time penalties should be applied in a way that encourages efficient gameplay without overly punishing the snake for exploring and making smart moves.
+
+
+
+
+
+
 
 ### Reward Types
 
-I balanced the reward density using immediate and intermediate feedback. Immediate rewards are feedback that require immediate attention, and intermediate rewards are feedback that are meant to give the agent a more general guideline.
+Considering everything we discussed in the reward shaping section, let's start desining some rewards. I balanced the reward density using immediate and intermediate feedback. Immediate rewards are feedback that require immediate attention, and intermediate rewards are feedback that are meant to give the agent a more general guideline.
 
 Immediate Feedback (in descending priority):
 1. Collision (-)
@@ -83,6 +102,8 @@ Immediate Feedback (in descending priority):
 Intermediate Feedback:
 1. Distance to apple (+ for closer)
 2. Distance to tail (+ for further)
+
+
 
 ## Agent's Observations
 
@@ -103,15 +124,14 @@ Below is a list some of my considerations:
    * I added boolean 'visited' to check which future actions lead the snake to a cell that's been visited already. Hopefully, the snake realizes that re-visiting somewhere is a not too efficient move.
 9. Evaluation of current body positions
    * I added a boolean 'trapped' info to check if there are any unreachable voids in the map isolated by the snake bodies. Hopefully, the agent realizes that making voids in the map is a bad move. 
+10. The entire game screen
+    * I want to compare the manual information vs visual information.
+
+ ### One-Hot Encoding
 
 
 
-------------------------
-interesting findings
-1. exploration is not encouraged with penalty for not exploring. It seems to rather make the agent timid. As long as there is a penalty for making redundant moves, any amount of exploration reward didn't make the agent more adventurous.
-
-   -----------------------
-   
+### 
 
 <img src="readme_image/memory_comparison_length.png" height="200"> <img src="readme_image/memory_comparison_reward.png" height="200">
 
