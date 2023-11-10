@@ -62,14 +62,15 @@ The first thing we need to consider is avoiding [premature convergence](https://
 
 ### Exploration vs. Exploitation
 
-We want our agent to make the most informed decisions, and that information is gained from exploration. To encourage exploration, we have to make it rewarding. One way to achieve that is implementing intrinsic rewards, such as rewards for new discoveries and improved knowledge. See this [page](https://lilianweng.github.io/posts/2020-06-07-exploration-drl/) for much more in-depth explanation of exploration in RL. 
+We want our agent to make the most informed decisions, and that information is gained from exploration. To encourage exploration, we have to make it rewarding. One way to achieve that is implementing intrinsic rewards, such as rewards for new discoveries and improved knowledge. See these [OpenAI page](https://openai.com/research/reinforcement-learning-with-prediction-based-rewards) and [blog page](https://lilianweng.github.io/posts/2020-06-07-exploration-drl/) for much more in-depth explanation of exploration in RL. 
 
 Exploitation is not always a bad thing. It means the agent found a good plan to maximize the reward. However, it becomes a problem when intrinsic rewards are exploited. One of the example of this is called 'the noisy-tv problem.' It happens when the agent finds a source of randomness in the environment and continuously harvest intrinsic rewards. 
 
 <img src='readme_image/noisy_tv.gif'>
 
-exploration is not encouraged with penalty for not exploring. It seems to rather make the agent timid. As long as there is a penalty for making redundant moves, any amount of exploration reward didn't make the agent more adventurous.
+[The noisy-tv problem](https://openai.com/research/reinforcement-learning-with-prediction-based-rewards)
 
+Also, I found that exploration is not encouraged with penalty for not exploring. It seems to rather make the agent more timid. As long as there is a penalty for making redundant moves, any amount of exploration reward didn't make the agent more adventurous.
 
 ### Reward Density 
 
@@ -82,12 +83,6 @@ exploration is not encouraged with penalty for not exploring. It seems to rather
 | Potential Downside  |         Uncertain agent         |    Biased agent     |
 
 It's important to balance the reward density. For example, the survival reward should be substantial enough to encourage safe movements, but not so high that the agent does not find apples rewarding. Similarly, the time penalties should be applied in a way that encourages efficient gameplay without overly punishing the snake for exploring and making smart moves.
-
-
-
-
-
-
 
 ### Reward Types
 
@@ -102,8 +97,6 @@ Immediate Feedback (in descending priority):
 Intermediate Feedback:
 1. Distance to apple (+ for closer)
 2. Distance to tail (+ for further)
-
-
 
 ## Agent's Observations
 
