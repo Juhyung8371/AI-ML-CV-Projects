@@ -1,14 +1,14 @@
 # AI learns to play Snake by itself
 
-# Summary
+# <ins>Summary</ins>
 
 Created a self-learning AI for Snake using deep reinforcement learning, particularly Proximal Policy Optimization (PPO). This project served as a valuable learning experience, involving critical research in model selection, reward shaping, hyperparameter tuning, and developing a reusable environment with parallel computing capabilities.
 
-# Objective
+# <ins>Objective</ins>
 
 This project aims to explore deep-reinforcement learning and apply the knowledge to create my own self-learning AI agent. I chose the [Snake](https://en.wikipedia.org/wiki/Snake_(video_game_genre)) game because it is ["Easy to Learn, Difficult to Master"](https://en.wikipedia.org/wiki/Bushnell%27s_Law). I was curious if it's true for AIs as well. 
 
-# Methodology
+# <ins>Methodology</ins>
 
 ## Model Selection
 
@@ -18,7 +18,7 @@ This project aims to explore deep-reinforcement learning and apply the knowledge
 
 There are a variety of reinforcement learning (RL) algorithms. Above diagram shows some examples of RL taxonomy. 
 
-### What is model in RL? Model-based vs. Model-free 
+### *What is model in RL? Model-based vs. Model-free*
 
 In reinforcement learning, the term "model" typically doesn't refer to a learned neural network but to the design of the environment used for simulation and planning. A model in RL a representation of how the RL agent perceives and interacts with the environment. It includes information about the states, actions, rewards, and transition dynamics.
 
@@ -37,7 +37,7 @@ Let's say an RL AI wants to go visit somewhere, but they don't have a map. A mod
 
 I decided to go with the model-free algorithms for its robustness. 
 
-### Model Options
+### *Model Options*
 
 These are some popular RL algorithm choices when it comes to video games:
 
@@ -56,23 +56,7 @@ I'm running this program in a laptop with a not too powerful CPU (Ryzen 3 3200U)
 
 The reward system defines the goals for the agent and guides it in learning the desired behavior. Well-balanced rewards are critical in finding the desired outcome. There are quite a few things to consider here.
 
-### Premature Convergence
-
-The first thing we need to consider is avoiding [premature convergence](https://machinelearningmastery.com/premature-convergence/). It refers to the situation where the agent is stuck at a suboptimal solution and fail to improve further. One of its main cause is the lack of exploration. The agent may refuse to explore and learn new things if it's not worth it - either the exploration is too risky or the exploitation is too good. 
-
-### Exploration vs. Exploitation
-
-We want our agent to make the most informed decisions, and that information is gained from exploration. To encourage exploration, we have to make it rewarding. One way to achieve that is implementing intrinsic rewards, such as rewards for new discoveries and improved knowledge. See these [OpenAI page](https://openai.com/research/reinforcement-learning-with-prediction-based-rewards) and [blog page](https://lilianweng.github.io/posts/2020-06-07-exploration-drl/) for much more in-depth explanation of exploration in RL. 
-
-Exploitation is not always a bad thing. It means the agent found a good plan to maximize the reward. However, it becomes a problem when intrinsic rewards are exploited. One of the example of this is called 'the noisy-tv problem.' It happens when the agent finds a source of randomness in the environment and continuously harvest intrinsic rewards. 
-
-<img src='readme_image/noisy_tv.gif'>
-
-[The noisy-tv problem](https://openai.com/research/reinforcement-learning-with-prediction-based-rewards)
-
-Also, I found that exploration is not encouraged with penalty for not exploring. It seems to rather make the agent more timid. As long as there is a penalty for making redundant moves, any amount of exploration reward didn't make the agent more adventurous.
-
-### Reward Density 
+### *Reward Density (Feedback Frequency)*
 
 |                     |         Sparse Rewards          |    Dense Rewards    |
 |:-------------------:|:-------------------------------:|:-------------------:|
@@ -82,25 +66,47 @@ Also, I found that exploration is not encouraged with penalty for not exploring.
 |       Example       | Rewarded at the end of the game | Rewarded every move |
 | Potential Downside  |         Uncertain agent         |    Biased agent     |
 
-It's important to balance the reward density. For example, the survival reward should be substantial enough to encourage safe movements, but not so high that the agent does not find apples rewarding. Similarly, the time penalties should be applied in a way that encourages efficient gameplay without overly punishing the snake for exploring and making smart moves.
+The reward density is one of the ways to classify the reward types. It's important to balance the sparse and dense rewards because they have unique pros and cons. For example, if the agent is rewarded only when it finishes the snake game (completely fill up the grid with the snake), then the agent might never realize the ultimate goal because finishing the game requires very calculated series of moves. On the other hand, if the human micromanages the agent by doing all the thinking for the agent, then not only it can introduce human bias, but it also diminishes the purpose of using reinforcement learning. 
 
-### Reward Types
+### *Premature Convergence*
 
-Considering everything we discussed in the reward shaping section, let's start desining some rewards. I balanced the reward density using immediate and intermediate feedback. Immediate rewards are feedback that require immediate attention, and intermediate rewards are feedback that are meant to give the agent a more general guideline.
+We need to consider is avoiding [premature convergence](https://machinelearningmastery.com/premature-convergence/). It refers to the situation where the agent is stuck at a suboptimal solution and fail to improve further. One of its main cause is the lack of exploration. The agent may refuse to explore and learn new things if it's not worth it - either the exploration is too risky or the exploitation is too good. 
 
-Immediate Feedback (in descending priority):
-1. Collision (-)
-2. Eating apple (+)
-3. Survival (+)
-4. Exploration (+)
+### *Exploration vs. Exploitation*
+
+We want our agent to make the most informed decisions, and that information is gained from exploration. To encourage exploration, we have to make it rewarding. One way to achieve that is implementing intrinsic rewards, also known as curiosity rewards, such as rewards for new discoveries and improved knowledge. See these [OpenAI page](https://openai.com/research/reinforcement-learning-with-prediction-based-rewards) and [blog page](https://lilianweng.github.io/posts/2020-06-07-exploration-drl/) for much more in-depth explanation of exploration in RL. 
+
+Exploitation is not always a bad thing. It means the agent found a good plan to maximize the reward. However, it becomes a problem when the reward structure is exploited. One of the example of this is 'the noisy-tv problem.' It happens when the agent finds a source of randomness in the environment and continuously harvest intrinsic rewards, without getting closer to the ultimate goal. 
+
+<img src='readme_image/noisy_tv.gif'>
+
+[The noisy-tv problem](https://openai.com/research/reinforcement-learning-with-prediction-based-rewards)
+
+### *Reward Types*
+
+Immediate Feedback:
+* Collision (-)
+* Eating apple (+)
 
 Intermediate Feedback:
-1. Distance to apple (+ for closer)
-2. Distance to tail (+ for further)
+* Exploration (+)
 
-## Agent's Observations
 
-To enable the agent to make connections between rewards and relevant information in the Snake game, it needs access to essential game state information (called 'observation' in stable baseline3). More information can yield more sophisticated behavior, but it can also cause longer training time. Also, I noticed that the agent usually learned better from simpler information like boolean than complex ones like number.
+In reward design, I've balanced feedback density with immediate rewards tied to game outcomes (ex: eating the apple, colliding with the wall) and intermediate feedback for general guidance, like exploration rewards. While I considered additional rewards (ex: survival, proximity to the apple, distance from the tail), I limited frequent feedback to avoid premature convergence. For instance, survival rewards can discourage exploration despite encouraging safe movements.
+
+In particular, I found that penalty can often lead to less optimal outcome. For instance, I tested how penalizing the agent for making efficient moves (getting trapped, repeating meaningless moves) affects the agent. In the performance chart below, the green line is without the penalty and the red line is with the penalty. The left char is the survival time and the right chart is the total reward. Interestingly, when given the same information, agents performed better without penalties in many cases. I learned that reward shaping is particularly prone to human bias. That's why I focused on providing more and better quality information to the agent instead of feedback, so the agent can make the decision. 
+
+<img src="readme_image/penalty_comparison.png" height="200">
+
+## Agent's Observations (Input)
+
+For the agent to make connections between rewards and actions, it needs access to essential game state information (called 'observation' in Stable Baseline3). More information can yield more sophisticated behavior, but it can also cause longer training time. 
+
+Like any machine learning process, reinforcement learning benefits from data preprocessing. In my case, data normalization and one-hot encoding was particularly useful. 
+
+Normalization is a fundamental preprocessing step in machine learning that contributes to the stability, efficiency, and generalization capabilities of models, making them more robust and suitable for a wide range of applications.
+
+I noticed that the agent usually learned better from simpler information like boolean than complex ones like number.
 
 Below is a list some of my considerations:
 
@@ -120,11 +126,11 @@ Below is a list some of my considerations:
 10. The entire game screen
     * I want to compare the manual information vs visual information.
 
- ### One-Hot Encoding
+### *One-Hot Encoding*
 
 
 
-### 
+### A
 
 <img src="readme_image/memory_comparison_length.png" height="200"> <img src="readme_image/memory_comparison_reward.png" height="200">
 
@@ -158,19 +164,19 @@ PPO has quite a few hyperparameters, and each of them affect the agent's behavio
 | **Network Architecture**        | Design of policy and value function networks.                   | Influences the complexity of the model and its ability to capture patterns in the data. | Varies. I went with MlpPolicy.    |
 | **Optimization Algorithm**      | Choice of optimization algorithm (ex., Adam, RMSprop).          | Affects convergence speed and stability.                                                | Varies. Adam in stable baseline3. |
 
-### Learning Rate
+### *Learning Rate*
 
 <img src="readme_image/lr_comparison.png" height="200">
 
 I played around with learning rate to observe its effect on agent's behavior. Green is lr=0.00003 and Red is lr=0.003. As expected, higher learning rate yielded a faster result. If Green was given enough time, it might have yielded a better result than Red. However, since time and performance is a trade-off, Green is too slow. 
 
-### Entropy Coefficient
+### *Entropy Coefficient*
 
 <img src="readme_image/ent_coeff_comparison.png" height="200">
 
 I played around with entropy coefficient to observe its effect on agent's behavior. Orange is ent_coeff=0.001 and Gray is ent_coeff=0.1. I thought higher entropy coefficient would encourage exploration, but I was quite the opposite for this test. Maybe 0.1 was too much encouragement for randomness, that the Gray agent's decisions were contaminated by noises.
 
-# Result
+# <ins>Result</ins>
 
 ## Evaluation Criteria
 
@@ -193,7 +199,7 @@ I double-checked this approach by calculating them manually (step_test.py). I fo
 
 ## Evaluation
 
-# Discussion
+# <ins>Discussion</ins>
 
 * What I achieved
 * Limitations
