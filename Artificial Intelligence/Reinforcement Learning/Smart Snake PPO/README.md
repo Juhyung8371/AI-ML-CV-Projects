@@ -138,33 +138,33 @@ A list of information I fed to the agent:
 
 ## Hyperparameter Tuning
 
-PPO has quite a few hyperparameters, and each of them affect the agent's behavior differently. Check [stable baseline3](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html)'s implementation, too. Below table explains some important hyperparameters:
+| Hyperparameter                  | Description                                                     | Effect of Change                                                                        | Common Range/Value                               |
+|---------------------------------|-----------------------------------------------------------------|-----------------------------------------------------------------------------------------|--------------------------------------------------|
+| **Learning Rate (lr)**          | Step size for policy optimization.                              | Influences the speed of learning.                                                       | 1e-5 to 1e-3. I went with 3e-4.                  |
+| **Clip Parameter (clip_epsilon)** | Maximum allowed policy change ratio.                            | Stabilizes training by limiting policy updates.                                         | 0.2                                              |
+| **Number of Epochs (n_epochs)** | Number of times data is reused for updates.                     | More epochs can lead to more stable policy updates.                                     | 1 to 10                                          |
+| **Batch Size (batch_size)**     | Number of samples in each policy update.                        | Larger batch sizes may yield more accurate gradient estimates.                          | Varies. I went with 256.                         |
+| **Value Function Coefficient (vf_coef)** | Weight of the value function loss.                              | Controls the balance between policy and value updates.                                  | 0.5                                              |
+| **Entropy Coefficient (ent_coef)** | Weight of the entropy term.                                     | Influences the level of exploration in the policy.                                      | 0.01. I went with 0.001.                         |
+| **Discount Factor (gamma)**     | Trade-off between immediate and future rewards.                 | Higher value favors long-term rewards.                                                  | 0.99                                             |
+| **GAE Lambda (gae_lambda)**     | Controls weight of accumulated rewards in advantage estimation. | Adjusts the impact of the GAE calculation on the advantage.                             | 0.95                                             |
+| **Number of Parallel Environments** | Number of parallel workers (if used).                           | Impacts training speed and stability.                                                   | Varies. I went with 4 due to the hardware limit. |
+| **Network Architecture**        | Design of policy and value function networks.                   | Influences the complexity of the model and its ability to capture patterns in the data. | Varies. I went with MlpPolicy.                   |
+| **Optimization Algorithm**      | Choice of optimization algorithm (ex., Adam, RMSprop).          | Affects convergence speed and stability.                                                | Varies. Adam in Stable Baseline3's PPO.          |
 
-| Hyperparameter                  | Description                                                     | Effect of Change                                                                        | Common Range/Value                |
-|---------------------------------|-----------------------------------------------------------------|-----------------------------------------------------------------------------------------|-----------------------------------|
-| **Learning Rate (lr)**          | Step size for policy optimization.                              | Influences the speed of learning.                                                       | 1e-5 to 1e-3                      |
-| **Clip Parameter (clip_epsilon)** | Maximum allowed policy change ratio.                            | Stabilizes training by limiting policy updates.                                         | 0.2                               |
-| **Number of Epochs (n_epochs)** | Number of times data is reused for updates.                     | More epochs can lead to more stable policy updates.                                     | 1 to 10                           |
-| **Batch Size (batch_size)**     | Number of samples in each policy update.                        | Larger batch sizes may yield more accurate gradient estimates.                          | Varies                            |
-| **Value Function Coefficient (vf_coef)** | Weight of the value function loss.                              | Controls the balance between policy and value updates.                                  | 0.5                               |
-| **Entropy Coefficient (ent_coef)** | Weight of the entropy term.                                     | Influences the level of exploration in the policy.                                      | 0.01                              |
-| **Discount Factor (gamma)**     | Trade-off between immediate and future rewards.                 | Higher value favors long-term rewards.                                                  | 0.99                              |
-| **GAE Lambda (gae_lambda)**     | Controls weight of accumulated rewards in advantage estimation. | Adjusts the impact of the GAE calculation on the advantage.                             | 0.95                              |
-| **Number of Parallel Environments** | Number of parallel workers (if used).                           | Impacts training speed and stability.                                                   | Varies. I went with 4.            |
-| **Network Architecture**        | Design of policy and value function networks.                   | Influences the complexity of the model and its ability to capture patterns in the data. | Varies. I went with MlpPolicy.    |
-| **Optimization Algorithm**      | Choice of optimization algorithm (ex., Adam, RMSprop).          | Affects convergence speed and stability.                                                | Varies. Adam in stable baseline3. |
+PPO has quite a few hyperparameters, and each of them affect the agent's behavior differently. Check [Stable Baseline3](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html)'s implementation, too. Above table explains some important hyperparameters. I played with hyperparameters and here are some experiment results:
 
 ### *Learning Rate*
 
 <img src="readme_image/lr_comparison.png" height="200">
 
-I played around with learning rate to observe its effect on agent's behavior. Green is lr=0.00003 and Red is lr=0.003. As expected, higher learning rate yielded a faster result. If Green was given enough time, it might have yielded a better result than Red. However, since time and performance is a trade-off, Green is too slow. 
+I played around with learning rate to observe its effect on agent's behavior. Green is lr=0.00003 and Red is lr=0.003. As expected, higher learning rate yielded a faster result. If Green was given enough time, it might have yielded a better result than Red. However, since time and performance is a trade-off, Green can be less practical. 
 
 ### *Entropy Coefficient*
 
 <img src="readme_image/ent_coeff_comparison.png" height="200">
 
-I played around with entropy coefficient to observe its effect on agent's behavior. Orange is ent_coeff=0.001 and Gray is ent_coeff=0.1. I thought higher entropy coefficient would encourage exploration, but I was quite the opposite for this test. Maybe 0.1 was too much encouragement for randomness, that the Gray agent's decisions were contaminated by noises.
+I played around with entropy coefficient to observe its effect on agent's behavior. Orange is ent_coeff=0.001 and Gray is ent_coeff=0.1. I thought higher entropy coefficient would encourage exploration, but it was quite the opposite for this test. Maybe 0.1 was too much randomness that the Gray agent's decisions were contaminated by noises.
 
 # <ins>Result</ins>
 
@@ -185,20 +185,23 @@ Then, the average total steps per game would be:
 Solving it gives:
 > $$\frac{N^4}{4}$$
 
-I double-checked this approach by calculating them manually (step_test.py). I found that this equation a bad estimator for smaller maps (N < 7) where it gives accuracy under 0.90. However, the accuracy is over 0.95 for N > 10 and over 0.99 for N > 23, which is good to use.
+I double-checked the math by adding moves manually (step_test.py). I found that this equation a bad estimator for smaller maps (N < 7) where it gives accuracy under 0.90. However, the accuracy is over 0.95 for N > 10 and over 0.99 for N > 23, which is good to use. Since I used 20x20 grid for training, the expected average game length to finish the game is 40000 steps.
 
 ## Evaluation
+
+
+
+
+
 
 # <ins>Discussion</ins>
 
 * What I achieved
-* Limitations
-* Future works
+* Limitations 
 
-More observation for agent:
-* The entire game screen
-    * CNN
-    * I want to compare the manual information vs visual information.
-* Past moves
-   * Some memory system like LSTM.
+## Future works
+
+Add more observation for agent:
+* I can provide the entire game screen information using a convolutional neural network. It will be a lot more information for the agenet will need to interpret so the learning time can get longer, but it will be a lot less work for me since I won't have to do more work to give the agent quality information. Then, I can compare the learning outcome from manual information and visual information.
+* I can try memory system. For instance, a system like LSTM can allow the agent to learn fine techniques from every game and general strategy from multiple runs. 
 
