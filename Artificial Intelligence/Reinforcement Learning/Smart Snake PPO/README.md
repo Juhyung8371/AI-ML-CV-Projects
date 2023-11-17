@@ -91,10 +91,9 @@ Immediate Feedback:
 Intermediate Feedback:
 * Exploration (+)
 
-
 In reward design, I've balanced feedback density with immediate rewards tied to game outcomes (ex: eating the apple, colliding with the wall) and intermediate feedback for general guidance, like exploration rewards. While I considered additional rewards (ex: survival, proximity to the apple, distance from the tail), I limited frequent feedback to avoid premature convergence. For instance, survival rewards can discourage exploration despite encouraging safe movements.
 
-In particular, I found that penalty can often lead to less optimal outcome. For instance, I tested how penalizing the agent for making efficient moves (getting trapped, repeating meaningless moves) affects the agent. In the performance chart below, the green line is without the penalty and the red line is with the penalty. The left char is the survival time and the right chart is the total reward. Interestingly, when given the same information, agents performed better without penalties in many cases. I learned that reward shaping is particularly prone to human bias. That's why I focused on providing more and better quality information to the agent instead of feedback, so the agent can make the decision. 
+In particular, I found that penalty can often lead to less optimal outcome. For instance, I tested how penalizing the agent for making efficient moves (getting trapped, repeating meaningless moves) affects the agent. In the performance chart below, the green line is without the penalty and the red line is with the penalty. The left chart is the survival time and the right chart is the total reward. Interestingly, when given the same information, agents performed better without penalties in many cases. I learned that reward shaping is particularly prone to human bias. That's why I focused on providing more and better quality information to the agent instead of feedback, so the agent can make the decision. 
 
 <img src="readme_image/penalty_comparison.png" height="200">
 
@@ -102,49 +101,40 @@ In particular, I found that penalty can often lead to less optimal outcome. For 
 
 For the agent to make connections between rewards and actions, it needs access to essential game state information (called 'observation' in Stable Baseline3). More information can yield more sophisticated behavior, but it can also cause longer training time. 
 
-Like any machine learning process, reinforcement learning benefits from data preprocessing. In my case, data normalization and one-hot encoding was particularly useful. 
-
-Normalization is a fundamental preprocessing step in machine learning that contributes to the stability, efficiency, and generalization capabilities of models, making them more robust and suitable for a wide range of applications.
-
-I noticed that the agent usually learned better from simpler information like boolean than complex ones like number.
-
-Below is a list some of my considerations:
-
-1. Snake head position
-2. Snake body positions / tail position
-3. Apple position / distance to apple / direction to apple
-4. Past moves
-   * I considered using some memory system like LSTM but did not implement it because it was too much work.
-5. Map boundaries
-6. Movement direction
-7. Score (snake length)
-8. Evaluation of future actions
-   * I added boolean 'collision' to check which future actions can cause a collision.
-   * I added boolean 'visited' to check which future actions lead the snake to a cell that's been visited already. Hopefully, the snake realizes that re-visiting somewhere is a not too efficient move.
-9. Evaluation of current body positions
-   * I added a boolean 'trapped' info to check if there are any unreachable voids in the map isolated by the snake bodies. Hopefully, the agent realizes that making voids in the map is a bad move. 
-10. The entire game screen
-    * I want to compare the manual information vs visual information.
-
-### *One-Hot Encoding*
-
-
-
-### A
+### *Quality over Quantity*
 
 <img src="readme_image/memory_comparison_length.png" height="200"> <img src="readme_image/memory_comparison_reward.png" height="200">
 
-I had to experiment how adding or removing each information affects the agent's behavior. For example, above is the result from playing around with the number of past moves an agent can remember. The left graphs is the average game runtime, and the right graph is the average reward in a game with 20x20 grid. 
+I experimented how quality and quantity of information affect the agent's behavior. For example, above is the result from playing around with the number of past moves from the current round an agent can reference. The left graphs is the average game runtime, and the right graph is the average reward.
 
-The agent starts the game with a lot of exploration, illustrated by the big spike in the game length graph. However, the agent does not gain much reward from this stage because I did not reward exploration during this test. Eventually, around 1M steps in, the exploration is over and the average steps per game converges to around 130, while the reward starts to slowly increase, converging to 1700 rewards per game (score of 15). 
+The agent starts the game with a lot of exploration, illustrated by the big spike in the game length graph. However, the agent does not gain much reward from this stage because I did not reward exploration during this test. Eventually, around 1M steps in, the exploration is over and the average steps per game converges to around 130, while the reward starts to slowly increase, converging to 1700 rewards per game (score of 15 in this reward system). 
 
-I tested 5, 20, 70 and 200 recent moves, and ran each of them for about 1.5M steps (I ran 200-moves one 6M steps just in case). Surprisingly, the number of recent moves did not change the agent's learning behavior too much. Possible explanations are:
+I tested 5, 20, 70 and 200 recent moves, and ran each of them for about 1.5M steps . I let 200-moves one learn longer to compensate the decreased rate from more complex information. Surprisingly, the number of recent moves did not change the agent's learning behavior and performance too much. Possible explanations are:
 
-1. I didn't give the agents enough time to learn despite the change in agent complexity.
-2. The 'past moves' information was not important in learning.
-3. The reward structure did not represent the goal of the game.
+1. The 'past moves' information was not important in learning due to its poor information quality.
+2. The reward structure did not represent the goal of the game.
 
-More testing is required to understand this behavior. 
+Since I confirmed that can't just chuck everything at the agent and expect it to be better, I needed to feed it quality information. 
+
+### *Improving Data Quality with Data Preprocessing*
+
+Like any machine learning process, reinforcement learning benefits from data preprocessing. In my case, data normalization and one-hot encoding was particularly useful.
+* Normalization is a fundamental preprocessing step in machine learning that contributes to the stability, efficiency, and generalization capabilities of models, making them more robust and suitable for a wide range of applications.
+* One-hot encoding is a technique used in data preprocessing to represent categorical variables as binary vectors. It can prevent model bias from ordinal assumptions (ex. thinking that 'red' is greater than 'blue' because it comes first) and improve performance.
+
+A list of information I fed to the agent:
+
+1. Normalized snake head position
+2. Normalized Apple position
+3. One-hot encoded snake head direction
+4. One-hot encoded direction to apple 
+5. Normalized current score
+6. Evaluation of future actions
+   * A boolean 'collision' to check which future actions can cause a collision.
+   * A boolean 'visited' to check which future actions lead the snake to a cell that's been visited already. Hopefully, the agent realizes that re-visiting a cell is a not too efficient move.
+   * A boolean 'void created' to check which future actions can create voids (unreachable spots) in the grid. Creating unreachable voids is a fatal move because it restricts snake's movement.
+7. Evaluation of current body positions
+   * A boolean 'trapped' info to check if the snake head is trapped in a void. 
 
 ## Hyperparameter Tuning
 
@@ -204,3 +194,11 @@ I double-checked this approach by calculating them manually (step_test.py). I fo
 * What I achieved
 * Limitations
 * Future works
+
+More observation for agent:
+* The entire game screen
+    * CNN
+    * I want to compare the manual information vs visual information.
+* Past moves
+   * Some memory system like LSTM.
+
