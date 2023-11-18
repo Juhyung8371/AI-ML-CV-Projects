@@ -6,7 +6,7 @@ Created a self-learning AI for Snake using deep reinforcement learning, particul
 
 # <ins>Objective</ins>
 
-This project aims to explore deep-reinforcement learning and apply the knowledge to create my own self-learning AI agent. I chose the [Snake](https://en.wikipedia.org/wiki/Snake_(video_game_genre)) game because it is ["Easy to Learn, Difficult to Master"](https://en.wikipedia.org/wiki/Bushnell%27s_Law). I was curious if it's true for AIs as well. 
+This project aims to explore deep-reinforcement learning and apply the knowledge to create my own self-learning AI agent. I chose the [Snake](https://en.wikipedia.org/wiki/Snake_(video_game_genre)) game because it is easy to learn, but difficult to master. I was curious if it's true for AIs as well. 
 
 # <ins>Methodology</ins>
 
@@ -85,17 +85,30 @@ Exploitation is not always a bad thing. It means the agent found a good plan to 
 ### *Reward Types*
 
 Immediate Feedback:
-* Collision (-)
-* Eating apple (+)
+* Collision penalty
+* Eating apple reward
 
 Intermediate Feedback:
-* Exploration (+)
+* Exploration reward
+* Creating void (usuable spots in the grid) penalty
 
-In reward design, I've balanced feedback density with immediate rewards tied to game outcomes (ex: eating the apple, colliding with the wall) and intermediate feedback for general guidance, like exploration rewards. While I considered additional rewards (ex: survival, proximity to the apple, distance from the tail), I limited frequent feedback to avoid premature convergence. For instance, survival rewards can discourage exploration despite encouraging safe movements.
+In reward design, I've balanced feedback density with immediate rewards tied to game outcomes (ex: eating the apple, colliding with the wall) and intermediate feedback for general guidance, like exploration and inefficient move feedback. While I considered additional rewards (ex: survival, proximity to the apple, distance from the tail), I limited frequent feedback to avoid premature convergence. For instance, frequent survival rewards can discourage exploration despite encouraging safe movements.
 
-In particular, I found that penalty can often lead to less optimal outcome. For instance, I tested how penalizing the agent for making efficient moves (getting trapped, repeating meaningless moves) affects the agent. In the performance chart below, the green line is without the penalty and the red line is with the penalty. The left chart is the survival time and the right chart is the total reward. Interestingly, when given the same information, agents performed better without penalties in many cases. I learned that reward shaping is particularly prone to human bias. That's why I focused on providing more and better quality information to the agent instead of feedback, so the agent can make the decision. 
+|                         Dynamic Reward Test                          |                                                                      | 
+|:--------------------------------------------------------------------:|:--------------------------------------------------------------------:|
+| <img src="readme_image/dynamic_reward_comparison1.png" height="200"> | <img src="readme_image/dynamic_reward_comparison2.png" height="200"> |
+|               Red: dynamic reward / Blue: fixed reward               |       Left: Game length / Middle: Total reward /  Right: Score       |
 
-<img src="readme_image/penalty_comparison.png" height="200">
+Like many other video games, Snake game progressively gets more challenging as you play, so adjusting the feedback amount becomes crucial in reflecting the real game play experience. I implemented a dynamic reward and penalty system, starting with small collision penalties and apple rewards in the early game. This emphasizes exploration behavior early on, with the importance of apple and collision feedback gradually increasing as the game progresses. Above charts show this system in action. Although agent with fixed reward got more reward, but the agent with dynamix reward survived longer and scored higher.
+
+|                Inefficient Move Penalty Test                 |
+|:------------------------------------------------------------:|
+| <img src="readme_image/penalty_comparison.png" height="200"> |
+|          Green: without penalty / Red: with penalty          |
+|           Left: Game length / Right: Total reward            |
+
+I found that penalty can often lead to less optimal outcome. For instance, I tested how penalizing the agent for making efficient moves (getting trapped, repeating meaningless moves) affects the agent. Interestingly, as shown the charts above, agents performed better without penalties in many cases. I learned that reward shaping is particularly prone to human bias. That's why I focused on providing more and better quality information to the agent instead of feedback, so the agent can make more intelligent decision. 
+
 
 ## Agent's Observations (Input)
 
