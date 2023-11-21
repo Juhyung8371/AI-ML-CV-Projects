@@ -99,7 +99,9 @@ In reward design, I've balanced feedback density with immediate rewards tied to 
 | <img src="readme_image/dynamic_reward_comparison1.png" height="200"> | <img src="readme_image/dynamic_reward_comparison2.png" height="200"> |
 |               Red: dynamic reward / Blue: fixed reward               |       Left: Game length / Middle: Total reward /  Right: Score       |
 
-Like many other video games, Snake game progressively gets more challenging as you play, so adjusting the feedback amount becomes crucial in reflecting the real game play experience. I implemented a dynamic reward and penalty system, starting with small collision penalties and apple rewards in the early game. This emphasizes exploration behavior early on, with the importance of apple and collision feedback gradually increasing as the game progresses. Above charts show this system in action. Although agent with fixed reward got more reward, but the agent with dynamix reward survived longer and scored higher.
+Like many other video games, Snake game progressively gets more challenging as you play, so adjusting the feedback amount becomes crucial in reflecting the real game play experience. I noticed that the priority for making safe move gets increasingly important as the snake gets longer. Based on that, I implemented a dynamic reward and penalty system.
+
+It starts with a small safe-move reward in the early game to encourage/greedy behavior while the risk of collision is lower. As the game progresses, the gradual increment of safe-move reward should teach the agent that it's better to be safe than sorry. Above charts show this system in action. Although agent with fixed reward got more reward, but the agent with dynamix reward survived longer and scored higher.
 
 |                Inefficient Move Penalty Test                 |
 |:------------------------------------------------------------:|
@@ -107,8 +109,7 @@ Like many other video games, Snake game progressively gets more challenging as y
 |          Green: without penalty / Red: with penalty          |
 |           Left: Game length / Right: Total reward            |
 
-I found that penalty can often lead to less optimal outcome. For instance, I tested how penalizing the agent for making efficient moves (getting trapped, repeating meaningless moves) affects the agent. Interestingly, as shown the charts above, agents performed better without penalties in many cases. I learned that reward shaping is particularly prone to human bias. That's why I focused on providing more and better quality information to the agent instead of feedback, so the agent can make more intelligent decision. 
-
+However, giving meaningful feedback can be hard because it often requires a deep understanding of the environment (which is not always available) and intense hyperparameter tuning. For instance, I tested how penalizing the agent for making efficient moves (getting trapped, repeating meaningless moves) affects the agent. Interestingly, as shown the charts above, agents performed better without penalties in many cases. I learned that reward shaping is particularly prone to human bias . That's why I also focused on providing more and better quality information to the agent, so it can make more intelligent decision. 
 
 ## Agent's Observations (Input)
 
@@ -151,19 +152,19 @@ A list of information I fed to the agent:
 
 ## Hyperparameter Tuning
 
-| Hyperparameter                  | Description                                                     | Effect of Change                                                                        | Common Range/Value                               |
-|---------------------------------|-----------------------------------------------------------------|-----------------------------------------------------------------------------------------|--------------------------------------------------|
-| **Learning Rate (lr)**          | Step size for policy optimization.                              | Influences the speed of learning.                                                       | 1e-5 to 1e-3. I went with 3e-4.                  |
-| **Clip Parameter (clip_epsilon)** | Maximum allowed policy change ratio.                            | Stabilizes training by limiting policy updates.                                         | 0.2                                              |
-| **Number of Epochs (n_epochs)** | Number of times data is reused for updates.                     | More epochs can lead to more stable policy updates.                                     | 1 to 10                                          |
-| **Batch Size (batch_size)**     | Number of samples in each policy update.                        | Larger batch sizes may yield more accurate gradient estimates.                          | Varies. I went with 256.                         |
+| Hyperparameter                           | Description                                                     | Effect of Change                                                                        | Common Range/Value                               |
+|------------------------------------------|-----------------------------------------------------------------|-----------------------------------------------------------------------------------------|--------------------------------------------------|
+| **Learning Rate (lr)**                   | Step size for policy optimization.                              | Influences the speed of learning.                                                       | 1e-5 to 1e-3. I went with 3e-4.                  |
+| **Clip Parameter (clip_epsilon)**        | Maximum allowed policy change ratio.                            | Stabilizes training by limiting policy updates.                                         | 0.2                                              |
+| **Number of Epochs (n_epochs)**          | Number of times data is reused for updates.                     | More epochs can lead to more stable policy updates.                                     | 1 to 10                                          |
+| **Batch Size (batch_size)**              | Number of samples in each policy update.                        | Larger batch sizes may yield more accurate gradient estimates.                          | Varies. I went with 256.                         |
 | **Value Function Coefficient (vf_coef)** | Weight of the value function loss.                              | Controls the balance between policy and value updates.                                  | 0.5                                              |
-| **Entropy Coefficient (ent_coef)** | Weight of the entropy term.                                     | Influences the level of exploration in the policy.                                      | 0.01. I went with 0.001.                         |
-| **Discount Factor (gamma)**     | Trade-off between immediate and future rewards.                 | Higher value favors long-term rewards.                                                  | 0.99                                             |
-| **GAE Lambda (gae_lambda)**     | Controls weight of accumulated rewards in advantage estimation. | Adjusts the impact of the GAE calculation on the advantage.                             | 0.95                                             |
-| **Number of Parallel Environments** | Number of parallel workers (if used).                           | Impacts training speed and stability.                                                   | Varies. I went with 4 due to the hardware limit. |
-| **Network Architecture**        | Design of policy and value function networks.                   | Influences the complexity of the model and its ability to capture patterns in the data. | Varies. I went with MlpPolicy.                   |
-| **Optimization Algorithm**      | Choice of optimization algorithm (ex., Adam, RMSprop).          | Affects convergence speed and stability.                                                | Varies. Adam in Stable Baseline3's PPO.          |
+| **Entropy Coefficient (ent_coef)**       | Weight of the entropy term.                                     | Influences the level of exploration in the policy.                                      | 0.01. I went with 0.001.                         |
+| **Discount Factor (gamma)**              | Trade-off between immediate and future rewards.                 | Higher value favors long-term rewards.                                                  | 0.99                                             |
+| **GAE Lambda (gae_lambda)**              | Controls weight of accumulated rewards in advantage estimation. | Adjusts the impact of the GAE calculation on the advantage.                             | 0.95                                             |
+| **Number of Parallel Environments**      | Number of parallel workers (if used).                           | Impacts training speed and stability.                                                   | Varies. I went with 4 due to the hardware limit. |
+| **Network Architecture**                 | Design of policy and value function networks.                   | Influences the complexity of the model and its ability to capture patterns in the data. | Varies. I went with MlpPolicy.                   |
+| **Optimization Algorithm**               | Choice of optimization algorithm (ex., Adam, RMSprop).          | Affects convergence speed and stability.                                                | Varies. Adam in Stable Baseline3's PPO.          |
 
 PPO has quite a few hyperparameters, and each of them affect the agent's behavior differently. Check [Stable Baseline3](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html)'s implementation, too. Above table explains some important hyperparameters. I played with hyperparameters and here are some experiment results:
 
@@ -198,7 +199,7 @@ Then, the average total steps per game would be:
 Solving it gives:
 > $$\frac{N^4}{4}$$
 
-I double-checked the math by adding moves manually (step_test.py). I found that this equation a bad estimator for smaller maps (N < 7) where it gives accuracy under 0.90. However, the accuracy is over 0.95 for N > 10 and over 0.99 for N > 23, which is good to use. Since I used 20x20 grid for training, the expected average game length to finish the game is 40000 steps.
+Since I used 20x20 grid for training, the expected average game length to finish the game is 40000 steps.
 
 ## Evaluation
 
