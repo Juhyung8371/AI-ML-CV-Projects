@@ -2,7 +2,7 @@
 
 ## Abstract
 
-This project aims to make an AI that learns how to play Flappy Bird using a genetic algorithm. It involves common machine learning concepts like model design, data preprocessing, and hyperparameter tuning, and genetic algorithm specific techniques like fitness function engineering, elitism, and genetic diversity management. 
+This project aims to make an AI that learns how to play Flappy Bird using a genetic algorithm. It involves common machine learning concepts like model design, data preprocessing, and hyperparameter tuning, and genetic algorithm-specific techniques like fitness function engineering, elitism, and genetic diversity management. 
 
 ## Introduction
 
@@ -14,7 +14,7 @@ Flappy Bird is a game where the player navigates the bird through pairs of pipes
 
 [Image Source](https://en.wikipedia.org/wiki/Metaheuristic)
 
-The genetic algorithm is a method for solving optimization problems based on natural selection. It's a heuristic search engine algorithms, or a metaheuristic.
+The genetic algorithm is a method for solving optimization problems based on natural selection. It's a heuristic search engine algorithm or a metaheuristic.
 
 <img src='readme_image/flowchart.png'>
 
@@ -29,7 +29,7 @@ This flowchart from [MathWorks](https://www.mathworks.com/help/gads/what-is-the-
 
 ### *Genetic Algorithm vs. Reinforcement Learning*
 
-Genetic Algorithm (GA) and Reinforcement Learning (RL) are both optimization algorithms, and the choice between them depends on the nature of the problem, the available computational resources, and the characteristics of the solution space. In RL, the agent improves from interacts with an environment over time. It is well-suited for dynamic and sequential decision-making problems. GA operate on populations of potential solutions, evolving them over generations through processes like selection, crossover, and mutation. It is versatile and effective in global search scenarios due to its solution diversity. Their pros and cons are all similar in context of a simple game like Flappy Bird. I went with GA for its capability to find the global optima.
+Genetic Algorithm (GA) and Reinforcement Learning (RL) are both optimization algorithms, and the choice between them depends on the nature of the problem, the available computational resources, and the characteristics of the solution space. In RL, the agent improves from interacting with an environment over time. It is well-suited for dynamic and sequential decision-making problems. GA operates on populations of potential solutions, evolving them over generations through processes like selection, crossover, and mutation. It is versatile and effective in global search scenarios due to its solution diversity. Their pros and cons are all similar in the context of a simple game like Flappy Bird. I went with GA for its capability to find the global optima.
 
 ## Model
 
@@ -43,7 +43,7 @@ The model consists of the following:
 3. 1 output
    - The result > 0.5 means perform 'jump'.
 
-This is fairly a small model, but it is suitable for this simple game. Larger model size will increase the complexity, which may encourage more sophisticated behavior, but will slow down the learning process unnecessarily. Instead, more training would yield a better outcome. 
+This is a fairly small model, but it is suitable for this simple game. A larger model size will increase the complexity, which may encourage more sophisticated behavior but will slow down the learning process unnecessarily. Instead, more training would yield a better outcome. 
 
 ## Result
 
@@ -51,7 +51,7 @@ Before and after:
 
 <img src='readme_image/before.gif' width=300> <img src='readme_image/after.gif' width=300>
 
-The birds performed very well (200+ scores) after a few generation.
+The birds performed very well (200+ scores) after a few generations.
 
 ## Discussion
 
@@ -67,7 +67,7 @@ Without a diverse gene pool, the population may end up in a local optima and cea
 
 1. Useful fitness function
    
-   I made sure that the fitness function reflects what I want to achieve from this AI. I chose the horizontal distance traveled, the vertical distance to the pipe gap, and the score.  
+   I ensured that the fitness function reflects what I want to achieve from this AI. I chose the horizontal distance traveled, the vertical distance to the pipe gap, and the score.  
 
    $fitness = horizontal_distance + (score * 5) - (gap * 2)$
 
