@@ -10,7 +10,11 @@ Flappy Bird is a game where the player navigates the bird through pairs of pipes
 
 ## Genetic Algorithm
 
-The genetic algorithm is a method for solving optimization problems based on natural selection. 
+<img src="readme_image/metaheuristics.png" height="500">
+
+[Image Source](https://en.wikipedia.org/wiki/Metaheuristic)
+
+The genetic algorithm is a method for solving optimization problems based on natural selection. It's a heuristic search engine algorithms, or a metaheuristic.
 
 <img src='readme_image/flowchart.png'>
 
