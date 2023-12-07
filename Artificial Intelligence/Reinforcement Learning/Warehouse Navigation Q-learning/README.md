@@ -21,7 +21,7 @@ This project is inspired by [this tutorial](https://youtu.be/iKdlKYG78j4).
 
 - The temporal difference is a method of considering current rewards in evaluating past actions.
 
-<img src='readme_image/bellman_equation' width=600> 
+<img src='readme_image/bellman_equation.png' width=600> 
 
 [image source](https://youtu.be/__t2XRxXGxI)
 
