@@ -262,7 +262,7 @@ The result shows that the win rate is 70%, which is pretty decent considering th
 
 <img height="200" src="readme_image/final_result.gif">
 
-The above gif is the footage of a full, completed run for demonstration. 
+The above gif is the footage of a full, completed run for demonstration. We can see that it does not make the most elegant moves, but it completes the game most of the time. 
 
 ## 2. Evaluation Criteria
 
