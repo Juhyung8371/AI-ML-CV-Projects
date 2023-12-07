@@ -14,13 +14,14 @@ This project is inspired by [this tutorial](https://youtu.be/iKdlKYG78j4).
 - The states and the actions must be finite.
 
 ## Temporal Difference
-<img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/Temporal%20Difference.png?raw=true' width=600> 
+
+<img src='readme_image/temporal_difference.png' width=600>
 
 [image source](https://youtu.be/__t2XRxXGxI)
 
 - The temporal difference is a method of considering current rewards in evaluating past actions.
 
-<img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/Bellman%20Equation.png?raw=true' width=600> 
+<img src='readme_image/bellman_equation' width=600> 
 
 [image source](https://youtu.be/__t2XRxXGxI)
 
@@ -46,7 +47,7 @@ As described in the first section, training is done using a Q-table, temporal di
 
 The pathfinding algorithm works as intended.
 
-<img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/before_path.png?raw=true'>
+<img src='readme_image/before_path.png'>
 
 ## Congestion Problem
 
@@ -56,8 +57,8 @@ After adjusting the rewards, the right path's usage decreases up to 8, and that 
 
 Usage rate before and after:
 
-<img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/before_usage.png?raw=true'> <img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/after_usage.png?raw=true'>
+<img src='readme_image/before_usage.png'> <img src='readme_image/after_usage.png'>
 
 Path change before and after:
 
-<img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/before_path.png?raw=true'> <img src='https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Q-Learning/Warehouse%20Navigation/after_path.png?raw=true'>
+<img src='readme_image/before_path.png'> <img src='readme_image/after_path.png'>
