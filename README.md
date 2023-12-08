@@ -14,7 +14,7 @@ This repository is a collection of various Artificial Intelligence (AI), Machine
 
 <img src="https://github.com/Juhyung8371/AI-ML-CV-Projects/blob/main/Artificial%20Intelligence/Reinforcement%20Learning/Smart%20Snake%20PPO/readme_image/final_result.gif?raw=true" width="300">
 
-[Smart Snake](https://github.com/Juhyung8371/AI-ML-CV-Projects/tree/main/Artificial%20Intelligence/Reinforcement%20Learning/Smart%20Snake%20PPO) is a self-learning AI for the Snake game using the Proximal Policy Optimization (PPO) reinforcement learning algorithm. From this project, I acquired a solid understanding of the fundamentals of reinforcement learning, laying a robust groundwork for future projects in this domain. It encompassed aspects such as model selection, reward shaping, hyperparameter tuning, and custom environment creation.
+[Smart Snake](https://github.com/Juhyung8371/AI-ML-CV-Projects/tree/main/Artificial%20Intelligence/Reinforcement%20Learning/Smart%20Snake%20PPO) is a self-learning AI for the Snake game using the Proximal Policy Optimization (PPO) reinforcement learning algorithm. From this project, I acquired a solid understanding of the fundamentals of reinforcement learning, laying a robust groundwork for future projects in this domain. It encompassed critical research in model selection, reward shaping, hyperparameter tuning, custom environment development, and parallel computing. The implemented solution outperformed existing alternatives by 18.7% and trivial solutions by 374.8%.
 
 ## *Artificial Intelligence*
 
