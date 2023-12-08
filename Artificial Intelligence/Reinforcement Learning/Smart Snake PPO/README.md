@@ -2,7 +2,7 @@
 
 # <ins>Summary</ins>
 
-Created a self-learning AI for Snake using deep reinforcement learning, particularly Proximal Policy Optimization (PPO). This project served as a valuable learning experience, involving critical research in model selection, reward shaping, hyperparameter tuning, and developing a reusable environment with parallel computing capabilities.
+Created a self-learning AI for Snake using deep reinforcement learning, particularly Proximal Policy Optimization (PPO). This project served as a valuable learning experience, involving critical research in model selection, reward shaping, hyperparameter tuning, custom environment development, and parallel computing. The implemented solution outperformed existing alternatives by 18.7% and trivial solutions by 374.8%.
 
 # <ins>Objective</ins>
 
