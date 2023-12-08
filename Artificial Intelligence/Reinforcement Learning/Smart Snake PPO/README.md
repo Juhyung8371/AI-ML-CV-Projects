@@ -143,9 +143,9 @@ Sparse rewards:
 * Game over (-)
 
 Dense rewards:
-* Eating apple
-* Making safe moves
-* Exploration
+* Eating apple (+)
+* Making safe moves (+)
+* Exploration (+)
 
 ## 3. Agent's Observations (Input)
 
