@@ -30,9 +30,10 @@ A Recurrent Neural Network (RNN) is a type of artificial neural network designed
 3. Create the model:
   <img src="architecture.png" height="500">
    The model consists of Embedding, RNN, and Dense layers.
-   - Embedding: The input layer. A trainable lookup table that will map each character-ID to a vector with embedding_dim dimensions;
-   - GRU: A type of RNN with size units=rnn_units
-   - Dense: The output layer, with vocab_size outputs. It outputs one logit for each character in the vocabulary. These are the log-likelihood of each character according to the model.
+   
+* Embedding: The input layer. A trainable lookup table that will map each character-ID to a vector with embedding_dim dimensions;
+* GRU: A type of RNN with size units=rnn_units
+* Dense: The output layer, with vocab_size outputs. It outputs one logit for each character in the vocabulary. These are the log-likelihood of each character according to the model.
 
   The feed-forward will occur until it fills up the sequence limit (it can run indefinitely). 
 
