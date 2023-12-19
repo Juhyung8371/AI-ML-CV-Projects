@@ -15,7 +15,7 @@ This flowchart from [MathWorks](https://www.mathworks.com/help/gads/what-is-the-
 
 In this project, DNA consists of Genes. Genes are the lines that create the target image. Genes consist of 4 numbers: x coordinate, y coordinate, line width, and line height. With the right combination of lines, the result can look like below:
 
-<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Artificial%20Intelligence/Genetic%20Algorithm/Line%20Artist/outcome.png'>
+<img src='outcome.png'>
 
 ## Discussion
 
