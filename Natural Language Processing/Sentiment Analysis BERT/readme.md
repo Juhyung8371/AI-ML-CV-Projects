@@ -123,7 +123,7 @@ These are some ways to combat over-fitting:
 
 See [this article](https://towardsdatascience.com/8-simple-techniques-to-prevent-overfitting-4d443da2ef7d) for more information on overfitting.
 
-I wanted to test my changes, but Colab won't let me use the GPU... Apparently, it'll take 2 hours to complete one epoch on a CPU. This is because GPUs have more cores (better parallel processing), specialized cores like Tensor Cores, and higher RAM capacity than CPUs, which provide a substantial speedup in training times. 
+I wanted to test my changes, but Colab won't let me use the GPU long enough to prepare the data and train. Apparently, it'll take 2 hours to complete one epoch on a CPU. This is because GPUs have more cores (better parallel processing), specialized cores like Tensor Cores, and higher RAM capacity than CPUs, which provide a substantial speedup in training times. I'll try again at some point. 
 
 Overall, this project was a nice exercise to get some hands-on experience from working with a large language model (LLM) like BERT. I learned how to incorporate a pre-trained LLM in my model to suit my needs. 
 
