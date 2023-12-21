@@ -62,9 +62,9 @@ The attention takes a sequence of vectors as input for each example and returns 
 
 Let's look at how this works:
 
-<img src="readme_images/attention1.png" alt="attention equation 1" height="200">
+<img src="readme_images/attention1.png" alt="attention equation 1" height="100">
 
-<img src="readme_images/attention2.png" alt="attention equation 2" height="200">
+<img src="readme_images/attention2.png" alt="attention equation 2" height="100">
 
 Where:
 
@@ -83,13 +83,13 @@ The equations:
 
 Last is the $score$ function. Its job is to calculate a scalar logit-score for each key-query pair. There are two common approaches:
 
-<img src="readme_images/attention3.png" alt="attention equation 3" height="200">
+<img src="readme_images/attention3.png" alt="attention equation 3" height="100">
 
 This exercise implements Luong-style attention using pre-defined `layers.Attention`.
 
 ### Training Model
 
-<img src="readme_images/training_model.png" height="350">
+<img src="readme_images/training_model.png" height="500">
 
 Above diagram shows the training model architecture. 
 
@@ -119,7 +119,7 @@ Once the layers are trained, I can use them to create a captioning model. Unlike
 
 ## Result
 
-<img src="readme_images/baseball.jpeg" height="300">
+<img src="readme_images/baseball.jpeg" height="200">
 
 ```
 baseball players on the field getting ready together in the field.
@@ -130,7 +130,7 @@ a baseball player hitting the ball with a batter.
 ```
 The first image is well-captioned.
 
-<img src="readme_images/surf.jpeg" height="300">
+<img src="readme_images/surf.jpeg" height="200">
 
 ```
 a man riding on top of a wave in the ocean.
@@ -141,7 +141,7 @@ a surfer seemed to ride a wave on a wave.
 ```
 The second image is well-captioned, too. The model got confused about the gender of the surfer, but it grasped the main idea of the image.
 
-<img src="readme_images/lambs.jpg" height="300">
+<img src="readme_images/lambs.jpg" height="200">
 
 ```
 two girls are holding a sheep next to a truck.
@@ -152,7 +152,7 @@ a woman standing next to a small goat.
 ```
 This result is not too accurate. So far, the model seems to perform better in classifying human than anything else.
 
-<img src="readme_images/corndogs.jpg" height="300">
+<img src="readme_images/corndogs.jpg" height="200">
 
 ```
 a couple of plates of food on a table.
@@ -164,7 +164,7 @@ a white table topped with plates and dishes full of food.
 
 The model can tell the image contains food, but it couldn't reliably distinguish the type of food. When I only trained the model for 1 epoch, it thought the corndogs were submarine. Since 3 epochs allows it to tell that this is food, I believe more training will increase the accuracy.
 
-<img src="readme_images/sloth.jpg" height="300">
+<img src="readme_images/sloth.jpg" height="200">
 
 ```
 a very tall basket that is in the grass.
