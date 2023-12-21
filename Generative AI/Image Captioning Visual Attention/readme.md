@@ -132,6 +132,8 @@ The first image is well-captioned.
 
 <img src="readme_images/surf.jpeg" height="250">
 
+-------
+
 ```
 a man riding on top of a wave in the ocean.
 a person that surfboard in the ocean with a surf board.
@@ -140,6 +142,8 @@ a beautiful young woman riding a boogie board on a wave.
 a surfer seemed to ride a wave on a wave.
 ```
 The second image is well-captioned, too. The model got confused about the gender of the surfer, but it grasped the main idea of the image.
+
+-------
 
 <img src="readme_images/lambs.jpg" height="250">
 
@@ -152,6 +156,8 @@ a woman standing next to a small goat.
 ```
 This result is not too accurate. So far, the model seems to perform better in classifying human than anything else.
 
+-------
+
 <img src="readme_images/corndogs.jpg" height="250">
 
 ```
@@ -163,6 +169,8 @@ a white table topped with plates and dishes full of food.
 ```
 
 The model can tell the image contains food, but it couldn't reliably distinguish the type of food. When I only trained the model for 1 epoch, it thought the corndogs were submarines. Since 3 epochs allow it to tell that this is food, I believe more training will increase the accuracy.
+
+-------
 
 <img src="readme_images/sloth.jpg" height="250">
 
