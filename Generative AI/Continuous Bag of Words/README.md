@@ -18,7 +18,7 @@ This is the structure of the model:
 
 3. Finally, a Dense layer with a softmax activation function is used to output the result.
 
-<img src='word_relationships.png' width='400'>
+<img src='readme_images/word_relationships.png' width='400'>
 
 We can extract some information from the result above. 
 
