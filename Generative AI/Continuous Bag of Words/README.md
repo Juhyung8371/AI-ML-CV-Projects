@@ -8,7 +8,7 @@ The CBOW technique captures the context of the word to better understand the rel
 
 Word vectors can be a building block of many Natural Language Processing tasks.
 
-<img src='https://drive.google.com/uc?id=11UcTETIGoFccIxp1PS75OSXPPNxWn_sa' width='600'>
+<img src='readme_images/model.png' width='600'>
 
 This is the structure of the model:
 
@@ -18,7 +18,7 @@ This is the structure of the model:
 
 3. Finally, a Dense layer with a softmax activation function is used to output the result.
 
-<img src='https://raw.githubusercontent.com/Juhyung8371/AI-ML-CV-Projects/main/Natural%20Language%20Processing/Continuous%20Bag%20of%20Words/word_relationships.png' width='400'>
+<img src='word_relationships.png' width='400'>
 
 We can extract some information from the result above. 
 
