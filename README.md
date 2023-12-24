@@ -1,4 +1,4 @@
-# My AI-ML-CV Projects
+# My AI Projects
 
 This repository is a collection of various Artificial Intelligence (AI), Machine Learning (ML), and Computer Vision (CV) projects. 
 
