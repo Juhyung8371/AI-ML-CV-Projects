@@ -170,25 +170,29 @@ tensor([[1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000],
 
 Attention vector after softmax. Now, the attention weight is forming a probability distribution, which is a convenient form to use. 
 
-
-
-
-
-
-
-
 ### *Feed Forward*
 
-
-The learning part
+The feed forward is a simple densely connected layers where the learning happens. It's made of `nn.Linear` with `ReLU` and `Dropout` components. 
 
 ### *Other important features*
 
-residual path
+#### Residual connection 
 
-layernorm
+Deep neural net suffer from optimization issue due to diminishing gradient. We can mitigate this issue with [residual connection](https://arxiv.org/abs/1512.03385) where we reserve the gradient by ensuring an unobstructed 'gradient highway'. Whenever data need to be processed and transformed, we make a branch from the original path, apply the transformation, and add it back to the original path. Here, addition is used because addition distributes gradient equally in both residual and branched off paths.   
 
-softmax turns the result into probability
+#### Layer Normalization
+
+Layer normalization is used to stabilize the learning. Like the name suggests, the elements are normalized across each layer. Unlike the original paper's implementation, I applied normalization before the attention head, instead of after, because it's the trend now. See [this video](https://youtu.be/G45TuC6zRf4?si=EzrPZbn4d5i_BBA2) for more information on layer normalization. 
+
+#### Token Selection Strategies
+
+The raw output of the transformer is a discrete probability distribution over all possible tokens calculated using the softmax function. There are a few strategies we can use to produce more various output. 
+
+* Temperature amplifies the softmax function so higher temperature will make output more random.
+* Top-K limits the output to a certain number (K) of the top tokens.
+* Top-p limits the output to the top tokens within a certain probability mass (p).
+
+Check [this article](https://peterchng.com/blog/2023/05/02/token-selection-strategies-top-k-top-p-and-temperature/) for more information on temperature, k, and p.
 
 
 Fine tuning 
