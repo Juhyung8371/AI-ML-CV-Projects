@@ -206,9 +206,62 @@ Transformer is made to guess the next word. It will produce a very general answe
 
 ## <ins>Result and Discussion</ins>
 
+Here is the result with following conditions:
+
+1. Context size = 256 (the context length for predictions)
+2. Learning Rate = 3e-4
+3. n_embd = 384 (number of features per token)
+4. n_head = 6 (number of heads in the multi-head attention)
+5. n_layer = 6 (number of attention blocks) 
+6. dropout = 0.4
+7. Training iterations = 5000 steps (~50 minutes on a T4 GPU)
+
+```
+CAMILLO:
+Whither, this schots that swear to me
+Have me serven; blook'd uplacks orne
+And to kitle gates plument.
+For a kneeling manhelly I duty,
+It honouself is upon my my sweet father;
+As I want fraill it is: our in vanife
+Esideness
+Which mean in mistolt pillarching this.
+
+CAMILLO:
+I do remenge from my persuitf.
+
+AELLASA:
+Peace, but boy?
+I hope it o't: 'tis the Ire two
+Is aguit one the dangerous flesh;
+That I am not, if you appear 'emades,
+You rathle.
+
+LEONTES:
+What's my honest sing's but I'll far at nor
+To pray you, but yours; even young Parisne
+Against your ladysiders. who's face?
+How does be the bod of your
+That yet? so sland by, our will cook
+Foundamed: who becanst our gate, sucked place
+Whose pleasing blush voicy I do,and cannot receive
+The Camillo when you that sensiors or
+Call it the more than him is and anoyal.
+```
+
+As we can see, the model managed to learn how to produce Shakespeare-like text pretty well. I can see that the text is in a play-style with blocks and speaker's name in front of each block. The words are recognizable, but the sentence as a whole does not make much sense. To improve the text generation result, I can do a few things:
+
+1. Use more complex text encoding techniques like the byte-pair encoding. 
+2. Use more diverse text input.
+3. Increase the model complexity (embeddings, heads, layers, etc.)
+3. Increase the training time.
+4. Fine tune with rules to correct grammar, sentence structure, or enhance coherence.
+5. Human evaluation 
 
 ## <ins>Next Steps</ins>
 
+1. Implement and use more complex text encoding techniques like word-based or byte-pair encoding.
+2. Implement a full encoder-decoder transformer. 
 
 
 
