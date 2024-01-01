@@ -256,12 +256,14 @@ As we can see, the model managed to learn how to produce Shakespeare-like text p
 3. Increase the model complexity (embeddings, heads, layers, etc.)
 3. Increase the training time.
 4. Fine tune with rules to correct grammar, sentence structure, or enhance coherence.
-5. Human evaluation 
+5. Human evaluation (supervised and reinforcement learning).
 
 ## <ins>Next Steps</ins>
 
 1. Implement and use more complex text encoding techniques like word-based or byte-pair encoding.
 2. Implement a full encoder-decoder transformer. 
+3. Fine-tune a model for specific uses. 
+4. Improve the result based on the things discussed in the discussion. 
 
 
 
