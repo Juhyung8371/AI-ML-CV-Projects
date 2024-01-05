@@ -19,7 +19,7 @@ First, raw images were obtained through web-scraping. Here are the [guidelines](
 * The information copied was primarily factual in nature, and the taking did not infringe on the rights — including copyrights — of another.
 * The information was used to create a transformative product and was not used to steal market share from the target website by luring away users or creating a substantially similar product.
 
-Second, tank diagnosis data was obtained through self-labeling and voluntary participation from online fish-keeping community members. Here are some data ethics practices I employed:
+Second, tank diagnosis data was obtained through my work and voluntary participation from online fish-keeping community members. Here are some data ethics practices I employed:
 
 1. User Consent and Anonymity:
    
@@ -33,7 +33,16 @@ Second, tank diagnosis data was obtained through self-labeling and voluntary par
    
     Striving for a representative dataset, the collection process was designed to be inclusive of various fish tank setups. This approach not only promotes diversity in the dataset but also prevents biases, ensuring that the Fish Tank Doctor delivers reliable results across various scenarios.
 
+<img src='readme_images/caption_gui.jpg' height=300>
 
+To streamline the image captioning, I developed a method, `caption_gui.py`, to easily save and load the captions to a CSV file format. HiggingFace's `ImageFolder` method uses metadata for image captioning dataset generation. The format is described [here](https://huggingface.co/docs/datasets/main/en/image_dataset#image-captioning):
+
+```
+file_name,additional_feature
+0001.png,This is a first value of a text feature you added to your images
+0002.png,This is a second value of a text feature you added to your images
+0003.png,This is a third value of a text feature you added to your images
+```
 
 
 
