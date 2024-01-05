@@ -20,4 +20,11 @@ This repository is a collection of various Artificial Intelligence (AI), Machine
 
 <img src="https://github.com/Juhyung8371/AI-Projects/blob/main/Genetic%20Algorithm/Smart%20Flappybird/readme_image/after.gif?raw=true">
 
-[Smart FlappyBird](https://github.com/Juhyung8371/AI-Projects/tree/main/Genetic%20Algorithm/Smart%20Flappybird) project aims to make an AI that learns how to play Flappy Bird using a genetic algorithm. It involves common machine learning concepts like model design, data preprocessing, and hyperparameter tuning, and genetic algorithm-specific techniques like fitness function engineering, elitism, and genetic diversity management. 
+[Smart FlappyBird](https://github.com/Juhyung8371/AI-Projects/tree/main/Genetic%20Algorithm/Smart%20Flappybird) project aims to make an AI that learns how to play Flappy Bird using a genetic algorithm. It involves common machine learning concepts like model design, data preprocessing, hyperparameter tuning, and genetic algorithm-specific techniques like fitness function engineering, elitism, and genetic diversity management. 
+
+## *Work in progress*
+
+Maintaining a balanced environment within a fish tank is an intricate task, often presenting challenges for both novice and experienced aquarists. Fish tank care encompasses a spectrum of challenges, requiring a keen understanding of water quality, species compatibility, overall tank conditions, etc. Inexperienced hobbyists may struggle to identify subtle signs of issues in their fish tanks.
+
+I am developing the 
+[Fish Tank Doctor](https://github.com/Juhyung8371/AI-Projects/tree/main/Generative%20AI/Fish%20Tank%20Doctor), an AI-powered fish tank diagnosis tool, to empower inexperienced fish keepers to overcome these challenges with precision and ease. Leveraging the capabilities of machine learning and computer vision, this tool stands as a reliable companion in the quest for fish-keeping mastery. It can offer a comprehensive analysis of visual cues and provide tailored insights into the tank's conditions.
