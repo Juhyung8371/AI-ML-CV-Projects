@@ -33,9 +33,9 @@ Second, tank diagnosis data was obtained through my work and voluntary participa
    
     Striving for a representative dataset, the collection process was designed to be inclusive of various fish tank setups. This approach not only promotes diversity in the dataset but also prevents biases, ensuring that the Fish Tank Doctor delivers reliable results across various scenarios.
 
-<img src='readme_images/caption_gui.jpg' height=300>
+<img src='readme_images/caption_gui.jpg' height=350>
 
-To streamline the image captioning, I developed a method, `caption_gui.py`, to easily save and load the captions to a CSV file format. HiggingFace's `ImageFolder` method uses metadata for image captioning dataset generation. The format is described [here](https://huggingface.co/docs/datasets/main/en/image_dataset#image-captioning):
+To streamline the image captioning, I developed a GUI, `caption_gui.py`, to easily save and load the captions to a CSV file format. The format is HuggingFace's `ImageFolder` caption dataset generation method's metadata format, which is described [here](https://huggingface.co/docs/datasets/main/en/image_dataset#image-captioning):
 
 ```
 file_name,additional_feature
