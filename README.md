@@ -10,13 +10,19 @@ This repository is a collection of various Artificial Intelligence (AI), Machine
 
 [Gaze-Controlled Mouse](https://github.com/Juhyung8371/AI-Projects/tree/main/Computer%20Vision/Gaze%20Mouse) aims to enhance human-computer interaction by implementing a real-time and affordable gaze-based mouse control. It can reduce the interaction time for users with limited hand mobility, leading to greater productivity and independence.
 
-## *Machine Learning*
+## *Reinforcement Learning*
 
 <img src="https://github.com/Juhyung8371/AI-Projects/blob/main/Reinforcement%20Learning/Smart%20Snake%20PPO/readme_image/final_result.gif?raw=true" width="300">
 
 [Smart Snake](https://github.com/Juhyung8371/AI-Projects/tree/main/Reinforcement%20Learning/Smart%20Snake%20PPO) is a self-learning AI for the Snake game using the Proximal Policy Optimization (PPO) reinforcement learning algorithm. From this project, I acquired a solid understanding of the fundamentals of reinforcement learning, laying a robust groundwork for future projects in this domain. It encompassed critical research in model selection, reward shaping, hyperparameter tuning, custom environment development, and parallel computing. The implemented solution outperformed existing alternatives by 18.7% and trivial solutions by 374.8%.
 
-## *Artificial Intelligence*
+## *Generative AI*
+
+<img src="https://raw.githubusercontent.com/Juhyung8371/AI-Projects/main/Generative%20AI/6%20GPT%20from%20scratch%20-%20Decoder-only%20Transformer/readme_images/decoder_only_transformer.png" height="400">
+
+[GPT from scratch](https://github.com/Juhyung8371/AI-Projects/tree/main/Generative%20AI/6%20GPT%20from%20scratch%20-%20Decoder-only%20Transformer) is a comprehensive analysis of the state-of-the-art machine learning architecture, transformer. I explored the fundamentals of transformers from text embeddings to attention mechanism, and put together a text predictor transformer from scratch using PyTorch. Check my other [Generative AI projects](https://github.com/Juhyung8371/AI-Projects/tree/main/Generative%20AI) as well.
+
+## *Genetic Algorithm*
 
 <img src="https://github.com/Juhyung8371/AI-Projects/blob/main/Genetic%20Algorithm/Smart%20Flappybird/readme_image/after.gif?raw=true" height=400>
 
