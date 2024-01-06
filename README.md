@@ -18,7 +18,7 @@ This repository is a collection of various Artificial Intelligence (AI), Machine
 
 ## *Artificial Intelligence*
 
-<img src="https://github.com/Juhyung8371/AI-Projects/blob/main/Genetic%20Algorithm/Smart%20Flappybird/readme_image/after.gif?raw=true">
+<img src="https://github.com/Juhyung8371/AI-Projects/blob/main/Genetic%20Algorithm/Smart%20Flappybird/readme_image/after.gif?raw=true" height=400>
 
 [Smart FlappyBird](https://github.com/Juhyung8371/AI-Projects/tree/main/Genetic%20Algorithm/Smart%20Flappybird) project aims to make an AI that learns how to play Flappy Bird using a genetic algorithm. It involves common machine learning concepts like model design, data preprocessing, hyperparameter tuning, and genetic algorithm-specific techniques like fitness function engineering, elitism, and genetic diversity management. 
 
