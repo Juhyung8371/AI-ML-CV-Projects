@@ -35,7 +35,7 @@ Second, tank diagnosis data was obtained through my work and voluntary participa
 
 <img src='readme_images/caption_gui.jpg' height=350>
 
-To streamline the image captioning, I developed a GUI, `caption_gui.py`, to easily save and load the captions to a CSV file format. This tool does the most of the tedious work of keeping track of file organization and formatting, so the caption writers can focus on producing quality captions. 
+To streamline the image captioning, I developed a GUI, `caption_gui.py`, to easily save and load the captions to a CSV file format. This tool automates most of the tedious work of keeping track of file organization and formatting so the caption writers can focus on producing quality captions. 
 
 The format is HuggingFace's `ImageFolder` caption dataset generation method's metadata format, which is described [here](https://huggingface.co/docs/datasets/main/en/image_dataset#image-captioning):
 
