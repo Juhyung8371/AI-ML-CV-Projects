@@ -1,4 +1,4 @@
-# Fish Tank Doctor - Fish Tank Health Diagnosis AI
+# Fish Tank Doctor - Fish Tank Health Diagnosis AI (work in progress)
 
 # Introduction
 
