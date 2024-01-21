@@ -2,7 +2,7 @@
 
 # Introduction
 
-Maintaining a balanced environment within a fish tank is an intricate task, often presenting challenges for both novice and experienced aquarists. Fish tank care encompasses a spectrum of challenges, as it requires a keen understanding of factors such as water quality, species compatibility, and overall tank conditions. Inexperienced hobbyists may struggle to identify subtle signs of issues in their fish tanks.
+Maintaining a balanced environment within a fish tank is an intricate task, often presenting challenges for both novice and experienced fish keepers. Fish tank care encompasses a spectrum of challenges, as it requires a keen understanding of factors such as water parameters, species care, and overall tank maintenance. Inexperienced hobbyists may struggle to identify subtle signs of issues in their fish tanks.
 
 I developed the Fish Tank Doctor, an AI-powered fish tank diagnosis tool, to empower inexperienced fish keepers to overcome these challenges with precision and ease. Leveraging the capabilities of machine learning and computer vision, this tool stands as a reliable companion in the quest for fish-keeping mastery. It can offer a comprehensive analysis of visual cues and provide tailored insights into the conditions of the tank.
 
@@ -23,7 +23,7 @@ Second, tank diagnosis data was obtained through my work and voluntary participa
 
 1. User Consent and Anonymity:
    
-    Explicit consent was obtained before any data collection began to ensure voluntary participation. All collected data is anonymized by removing any personally identifiable information from the dataset to preserve the subject's privacy. They were also informed about their right to retract their shared data at anytime. 
+    Explicit consent was obtained before any data collection began to ensure voluntary participation. All collected data is anonymized by removing any personally identifiable information from the dataset to preserve the subject's privacy. They were also informed about their right to retract their shared data anytime. 
    
 2. Transparency and Accountability:
    
