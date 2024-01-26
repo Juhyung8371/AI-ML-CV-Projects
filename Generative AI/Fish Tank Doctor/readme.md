@@ -1,12 +1,37 @@
 # Fish Tank Doctor - Fish Tank Health Diagnosis AI (work in progress)
 
-# Introduction
+# <ins>Introduction</ins>
 
 Maintaining a balanced environment within a fish tank is an intricate task, often presenting challenges for both novice and experienced fish keepers. Fish tank care encompasses a spectrum of challenges, as it requires a keen understanding of factors such as water parameters, species care, and overall tank maintenance. Inexperienced hobbyists may struggle to identify subtle signs of issues in their fish tanks.
 
 I developed the Fish Tank Doctor, an AI-powered fish tank diagnosis tool, to empower inexperienced fish keepers to overcome these challenges with precision and ease. Leveraging the capabilities of machine learning and computer vision, this tool stands as a reliable companion in the quest for fish-keeping mastery. It can offer a comprehensive analysis of visual cues and provide tailored insights into the conditions of the tank.
 
-# Data Collection and Data Ethics
+# <ins>Data Collection</ins>
+
+## Data Pipeline
+
+1. Image collection
+   * Automate it using a custom web-scraping code. 
+   * Future work: Train a GAN model to generate images. 
+2. Image filtering and captioning
+   * Use GPT-4 Vision for initial image captioning task. 
+   * The request prompt is engineered to produce aquarium maintenance insights in a short and consistent list format to minimize the output token cost while maximizing the output information. 
+   * Prompt: `"You are an expert aquarist. List good maintenance signs and potential improvements for the aquarium in this image using under five words each, * as a bullet point, and without headers."`
+   * Sometime the AI will say that they can't help me or have trouble with captioning task. I can add a prompt like `"Say 'STOPPED' if the image is not about aquariums or if you can't help me with this task."` but that requires a lot of tokens. Instead, I can just stop the AI mid-generation with the stop-sequence parameter, and filter out those incomplete captions with other scripts (detect missing new lines or bullet points).
+3. Caption elaboration
+   * I let GPT-3.5 Turbo, a cheaper and dialog fine-tuned model, elaborate on the list from image captioning task. 
+   Prompt: `"You are an expert aquarist. In a paragraph, elaborate on this aquarium:" + the short caption` 
+4. Combine with real-world data
+   * Combine the real-world data (ones ethically collected and ones produced myself) with the synthetic ones to ensure data diversity and enhance realism in data. 
+5. Human check
+   * Check and fix for any errors or shortcomings in the captions before augmenting them to produce more data. 
+6. Data augmentation 
+   * Augment the image using image processing techniques like rotation, flip, zooming, translation, noise addition, cropping, brightness adjustment, and contrast adjustment. 
+   * For text paraphrasing, use GPT-3.5 Turbo again because it's very good at text generation tasks like paraphrasing.  
+7. Human check
+   * The final check for quality assurance. 
+
+## Data Ethics
 
 In the development of the Fish Thank Doctor, a paramount consideration was the ethical and responsible collection of data. Recognizing the sensitive nature of user-generated content and the importance of privacy, I meticulously adhered to ethical principles throughout the data-gathering process. There are many resources about data ethics online like [this](https://www.intechopen.com/chapters/1121510), [this](https://medium.com/analytics-vidhya/data-ethics-in-artificial-intelligence-machine-learning-72467b9c70f3), [this](https://www.dataversity.net/machine-learning-data-governance-and-data-ethics/), and [this](https://online.hbs.edu/blog/post/data-ethics). 
 
@@ -43,6 +68,36 @@ file_name,additional_feature
 0002.png,This is a second value of a text feature you added to your images
 0003.png,This is a third value of a text feature you added to your images
 ```
+
+## Data Collection Automation with Synthetic Data
+
+Data collection is one of the most resource-intensive step of machine learning project. Data scientists spend around 80% of their time on preparing and managing data for analysis according to [this Forbes article](https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says/?sh=79dcbd16f637). Privacy/copyright concern is another hurdle. I attempt to solve those issues and streamline the data collection process with synthetic data. Synthetic data in machine learning refers to artificially generated data that mimics the characteristics of real-world data. 
+
+Benefits of Synthetic Data:
+
+| Advantages of Synthetic Data |                                                                                       Note                                                                                        |
+|:----------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|         More Ethical         |         Most importantly, it doesn’t expose sensitive data or breach copyright since it's made up. Therefore, it also removes the regulatory hurdles of collecting them.          |
+|        More Flexible         |                                        It allows organizations to share or distribute datasets without compromising sensitive information.                                        |
+|      Faster and Cheaper      | By minimizing regulatory hurdles, data collection time, data cleaning time, etc., one can quickly obtain a large amount of data at a lower cost, leading to greater productivity. |
+|    Better Quality Control    |                     Having the full control over the synthesis process, you can make changes and test easier such as adjusting data diversity and complexity.                     |
+
+
+| Disadvantages of Synthetic Data |                                                                                                          Note                                                                                                          |                                                                                           Potential Solutions                                                                                            |
+|:-------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|         Limited Realism         | Synthetic data may not perfectly capture the complexities and nuances of real-world scenarios. Creating high-quality, complex synthetic data requires a deep understanding of the data distribution and relationships. |                                                                         Combine synthetic data with real data in a balanced way.                                                                         |
+|  Risk of Overfitting and Bias   |                                                      Over-reliance on synthetic data can lead to overfitting and bias, since it is created by a man-made machine.                                                      |                   Employ bias detection and mitigation technique like bias metrics, bias indicator, regularization, over/under-sampling, etc. Also, fine-tune it with real-world data.                   |
+|  Privacy and Security Concern   |                          If the synthetic data generation process doesn't adequately mimic the real data, it could unintentionally reveal information about the original, sensitive dataset.                           | Regularly monitor the model to identify and address any potential privacy or security vulnerabilities. Anonymize the original data and adhere to legal and ethical guidelines when using synthetic data. |
+
+### Caption Generation
+
+<img src='readme_images/overstocked_tank_example.jpg' height=300>
+
+This is an example image of an overstocked aquarium. 
+
+### Caption Elaboration
+
+### Data Augmentation
 
 
 
