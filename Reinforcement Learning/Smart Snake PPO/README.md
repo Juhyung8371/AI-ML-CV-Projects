@@ -168,7 +168,7 @@ Since I confirmed that I can't just chuck everything at the agent and expect it 
 |:-----------------------------------------------------:|:-----------------------------------------------------:|
 |                      Square View                      |                       Line View                       |
 
-I experimented with providing view information to the agent. I tried two types: square view and line view around the snake's head. In the images above, green tiles are the snake, black tiles are the wall, red tile is the apple, and gray tiles are the tile that the agent can see. The agent is given the type of tile (wall, empty, snake, and apple) and the distance to that tile. Also, like straight, left, and right actions, the view is also rotated based on the direction of the head, so it's more consistent (ex. the view is rotated clockwise if the snake is looking left). Unfortunately, adding this kind of view information wasn't effective as the agent failed to improve beyond score 10 because it couldn't figure out which move could lead to a dead end using its short range of sight. It might need more sophisticated processing like CNN to truly take advantage of view information. However, I was able to use this view information to implement curiosity reward. I took the view information and compared it with others in the past. If it's different enough, then the agent gets an exploration reward. This will encourage the agent to explore the grid.
+I experimented with providing view information to the agent. I tried two types: square view and line view around the snake's head. In the images above, green tiles are the snake, black tiles are the wall, red tile is the apple, and gray tiles are the tiles that the agent can see. The agent is given the type of tile (wall, empty, snake, and apple) and the distance to that tile. Also, like straight, left, and right actions, the view is also rotated based on the direction of the head, so it's more consistent (ex. the view is rotated clockwise if the snake is looking left). Unfortunately, adding this kind of view information wasn't effective as the agent failed to improve beyond score 10 because it couldn't figure out which move could lead to a dead end using its short range of sight. It might need more sophisticated processing like CNN to truly take advantage of view information. However, I was able to use this view information to implement curiosity reward. I took the view information and compared it with others in the past. If it's different enough, then the agent gets an exploration reward. This will encourage the agent to explore the grid.
 
 | <img src="readme_image/cnn_result.png" height="200"> |
 |:----------------------------------------------------:|
@@ -262,11 +262,11 @@ The result shows that the win rate is 70%, which is pretty decent considering th
 
 <img height="200" src="readme_image/final_result.gif">
 
-The above gif is the footage of a full, completed run for demonstration. We can see that it does not make the most elegant moves, but it completes the game most of the time. 
+The above gif is the footage of a full, completed run for demonstration. We can see that it does not make the most efficient moves, but the imperfection rather produces interesting, random, and human-like moves.
 
 ## 2. Evaluation Criteria
 
-There is an infallible non-RL solution for the Snake game. The snake can simply follow a Hamiltonian Cycle, a cyclic path that passes every square on the grid without crossing itself. This is a trivial solution, but it can be a good reference to measure my snake agent's performance. If the snake travels the entire grid for each apple, then the total steps for a completed game can be the grid area squared (10000 steps for a 10x10 grid). I can make some assumptions to make this number more realistic. I'll assume that the average steps required to eat an apple at any point is half of the number of remaining unoccupied cells.
+There is an infallible non-RL solution for the Snake game. The snake can simply follow a Hamiltonian Cycle, a cyclic path that passes every square on the grid without crossing itself. This is a trivial solution, but it can be a good reference to measure my snake agent's performance. If the snake travels the entire grid for each apple, then the total steps for a completed game can be the grid area squared (10000 steps for a 10x10 grid). I can make some assumptions to make this number more realistic. I'll assume that the average steps required to eat an apple at any point are half the number of remaining unoccupied cells.
 
 Let's define some variables first:
 * N = the grid size
@@ -297,7 +297,7 @@ While my agent demonstrated overfitting to a 10x10 game, I've gained insights in
 
 * Exploring more nuanced and accurate methods for evaluating outcomes, moving beyond simplistic metrics like scores. So far, what I have are factors such as the number of voids and tail reachability.
 * I can improve upon the CNN policy by experimenting with advanced techniques like frame stacking to capture the sense of movement in images. Additionally, I can explore synergies by combining heuristic approaches with CNN to enhance learning outcomes.
-* Implementing a more sophisticated memory system, such as Long Short-Term Memory (LSTM), to enable the agent to learn fine techniques from individual games and overarching strategies from multiple runs. 
+* Implementing a more sophisticated memory system, such as Long Short-Term Memory (LSTM), can enable the agent to learn fine techniques from individual games and overarching strategies from multiple runs. 
 * Introducing an auto-hyperparameter tuning feature, streamlining the process of finding optimal configurations for faster and more efficient model training.
 
 # <ins>References</ins>
