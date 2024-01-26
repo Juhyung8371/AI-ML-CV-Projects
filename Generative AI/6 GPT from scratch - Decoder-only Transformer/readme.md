@@ -112,7 +112,7 @@ Attention mechanism:
 3. The Query and Key similarity is calculated. Many methods are possible, and the goal is to assign more weight to similar words. 
    1. Dot product (distance between words)
    2. Cosine similarity (angle difference between words from origin)
-   3. Scaled dot product (dot product / sqrt of vector length). In my implementation, I used the scaled dot product to make the gradient a unit gradient so the softmax will not be saturated and become a hot-hot vector, losing the context information from similarity calculation. 
+   3. Scaled dot product (dot product / sqrt of vector length). In my implementation, I used the scaled dot product to make the gradient a unit gradient so the softmax will not be saturated and become a one-hot vector, losing the context information from similarity calculation. 
 4. Softmax the result from step 3 to convert the result into probability form. Softmax is used instead of simple average because of negative numbers.
 5. Add the result from step 4 to the Value to obtain the final similarity score. 
 
