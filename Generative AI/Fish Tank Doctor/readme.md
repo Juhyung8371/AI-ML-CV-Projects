@@ -6,6 +6,28 @@ Maintaining a balanced environment within a fish tank is an intricate task, ofte
 
 I developed the Fish Tank Doctor, an AI-powered fish tank diagnosis tool, to empower inexperienced fish keepers to overcome these challenges with precision and ease. Leveraging the capabilities of machine learning and computer vision, this tool stands as a reliable companion in the quest for fish-keeping mastery. It can offer a comprehensive analysis of visual cues and provide tailored insights into the conditions of the tank.
 
+# <ins>Model Selection</ins>
+
+The ultimate goal of this project is to make a system that takes in an image of aquarium as the input and produces comprehensive feedback to help improve the fish husbandry. A suitable solution would be an image captioning model. There are many kinds of image captioning model. Not every architecture in below list is famous for image captioning, but they all made significant contribution in image captioning field.  
+
+Older architecture:
+
+1. In [Show and Tell](https://arxiv.org/abs/1502.03044), the image features are extracted using a Convolutional Neural Network (CNN) as an encoder, and a Long Short-Term Memory (LSTM) network is employed as a decoder to generate the sequential captions. Similarly, in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044), an attention mechanism is used to dynamically focusing on different parts of the image, improving the model's ability to capture finer details. 
+
+Newer architectures (transformers):
+
+1. **[Image Transformer](https://arxiv.org/abs/1802.05751) 2018:**
+   - The authors extend the transformer architecture, initially designed for sequence-to-sequence tasks in NLP, to process images. The key idea is to treat the image as a 1D sequence of fixed-size patches, similarly to how words in a sentence are treated. 
+   - It showcases the effectiveness of transformer-based architectures on image-based tasks, beyond traditional tasks like NLP.
+
+2. [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929) (a.k.a Vision Transformer) 2020:
+   - Vision Transformer (ViT) is similar to 'Image Transformer' in the sense they both used transformer to analyze the image, but it takes a different approach by treating the entire image as a sequence of fixed-size non-overlapping patches, aiming to capture both local and global spatial dependencies in the image.
+   - ViT did not replace CNNs but rather provided an additional tool in the toolbox for researchers.
+   - According to this Medium article [CNNs vs ViT](https://medium.com/@faheemrustamy/vision-transformers-vs-convolutional-neural-networks-5fe8f9e18efc), ViT could outperform CNNs given large dataset, but it is much more resource-intensive process than CNNs. 
+
+
+
+
 # <ins>Data Collection</ins>
 
 ## Data Pipeline
@@ -112,14 +134,10 @@ Human and GPT has their pros and cons. Human is a lot better at visual analysis 
 
 
 
+https://cameronrwolfe.substack.com/p/the-story-of-rlhf-origins-motivations history
 
+https://encord.com/blog/guide-to-rlhf/
 
+https://huggingface.co/blog/rlhf
 
-
-
-
-
-
-
-
-
+https://www.linkedin.com/advice/0/how-can-you-effectively-evaluate-nlp-model-image automatic metrics
