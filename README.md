@@ -30,7 +30,7 @@ This repository is a collection of various Artificial Intelligence (AI), Machine
 
 ## *Work in progress*
 
-Maintaining a balanced environment within a fish tank is an intricate task, often presenting challenges for both novice and experienced aquarists. Fish tank care encompasses a spectrum of challenges, requiring a keen understanding of water quality, species compatibility, overall tank conditions, etc. Inexperienced hobbyists may struggle to identify subtle signs of issues in their fish tanks.
+Maintaining a balanced environment within a fish tank is an intricate task, often presenting challenges for both novice and experienced fish keepers. Fish tank care encompasses a spectrum of challenges, as it requires a keen understanding of factors such as water parameters, species care, and overall tank maintenance. Inexperienced hobbyists may struggle to identify subtle signs of issues in their fish tanks.
 
 I am developing the 
 [Fish Tank Doctor](https://github.com/Juhyung8371/AI-Projects/tree/main/Generative%20AI/Fish%20Tank%20Doctor), an AI-powered fish tank diagnosis tool, to empower inexperienced fish keepers to overcome these challenges with precision and ease. Leveraging the capabilities of machine learning and computer vision, this tool stands as a reliable companion in the quest for fish-keeping mastery. It can offer a comprehensive analysis of visual cues and provide tailored insights into the tank's conditions.
