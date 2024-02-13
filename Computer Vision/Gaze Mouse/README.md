@@ -77,7 +77,7 @@ The horizontal gaze is determined by checking whether the center point between p
 
 #### Vertical Gaze
 
-Vertical gaze detection is a bit less intuitive than horizontal gaze detection. I cannot use the pupil's relative position against the eye to determine its vertical position. It's due to the limitation of MediaPipe face mesh: the iris landmarks always stay within the eye fissure landmarks. In other words, if the person looks up and the iris moves up, the entire eye landmarks will follow the iris instead of just the iris moving up. See the figures below to check this in action.
+Vertical gaze detection is a bit less intuitive than horizontal gaze detection. I cannot use the pupil's relative position against the eye to determine its vertical position. It's due to the limitation of MediaPipe face mesh: the iris landmarks always stay within the eye fissure landmarks. In other words, if the person looks up and the iris moves up, all the eye landmarks will follow the iris instead of just the iris moving up. See the figures below to check this in action.
 
 So, instead of using the pupil's relative position against the eye fissure as the measure to determine its vertical motion, I measured its distance to the tip of the nose. To be more accurate, I measure the following ratio:
 
@@ -111,11 +111,13 @@ This result says the user is looking down when he is looking right. This is also
 
 ## Discussion
 
-The major limitation of my solution is the need for more robustness. Many hard-coded constants, such as threshold values, are fine-tuned for my face. To solve this problem, I can:
+This solution can improve in robustness. Many hard-coded constants, such as threshold values, are fine-tuned for my face. To solve this problem, I can:
 
 1. Introduce a calibration session to collect the user's unique facial features. For instance, I can ask the user to look up, down, left, and right to collect the appropriate thresholds. I can also occasionally do some non-intrusive calibration during runtime to reinforce the calibration.
    
 2. Create a machine learning model that can determine the gaze direction. As the Literature Review section discusses, machine learning can be a robust and reliable solution. However, it will require a lot of training data.
+   
+3. I can enhance the detection result with computer vision techniques like adaptive thresholding, noise filtering, and blob detection. Those traditional computer vision approaches were mostly removed when I changed the face detection model from the dlib to MediaPipe, but I can bring them back to reinforce the eye detection result from the ML model.
 
 There are some usability issues, too:
 
