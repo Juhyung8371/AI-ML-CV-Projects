@@ -8,34 +8,39 @@ I developed the Fish Tank Doctor, an AI-powered fish tank diagnosis tool, to emp
 
 # <ins>Model Selection and Literature Review</ins>
 
-The ultimate goal of this project is to make a system that takes in an image of aquarium as the input and produces comprehensive text feedback to help improve the user's fish husbandry skills. A suitable solution would be an image captioning model. Image captioning is a subcategory of the vision-language task. In general, vision-language models (VLM) are asked to perform certain tasks with given image inputs, and they output natural language text. Examples of tasks include image captioning, visual question answering, object detection, visual generation, visual summarization, etc. 
+The ultimate goal of this project is to make a system that takes in an image of aquarium as the input and produces comprehensive text feedback to help improve the user's fish husbandry skills. A suitable solution would be an image captioning model. A visual question answering model would be good too if I want to extend the scope to allow the user to interact with the model and get more personalized information. Those models are subcategories of the vision-language model (VLM). In general, VLMs are asked to perform certain tasks with given image inputs, and they output natural language text. Examples of tasks include image captioning, visual question answering, object detection, visual generation, visual summarization, etc. 
 
 A VLM typically consists of 3 key elements: 
 - an image encoder
 - a text encoder
 - a strategy to fuse information from the two encoders
 
-1. **[Show and Tell](https://arxiv.org/abs/1502.03044)** 2018:
+1. **[VQA: Visual Question Answering](https://arxiv.org/abs/1505.00468) 2015**
+   - VQA aims to answer open-ended and free form questions, unlike older works such as [this paper](https://arxiv.org/abs/1410.0210) which limited the object category to 894 pre-defined objects and [this paper](https://www.researchgate.net/publication/273387445_Visual_Turing_test_for_computer_vision_systems) which has a set of questions four possible categories.
+   - It consists of VGGNet (a type of CNN network) as the image encoder and LSTM as the question text encoder. The visual and textual features are then combined using Element-wise Multiplication.
+   - This study introduced the visual-question answering task, released a benchmark dataset (the VQA dataset) for future VQA models, and demonstrated the effectiveness of multimodal fusion techniques for integrating visual and textual information in a unified framework.
+
+2. **[Show and Tell](https://arxiv.org/abs/1502.03044)** 2015:
    - The image features are extracted using a Convolutional Neural Network (CNN) as an encoder, and a Long Short-Term Memory (LSTM) network is employed as a decoder to generate the sequential captions. 
    - Similarly, in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044), an attention mechanism is used to dynamically focusing on different parts of the image, improving the model's ability to capture finer details. 
    - I implemented a similar architecture [here](https://github.com/Juhyung8371/AI-Projects/tree/main/Generative%20AI/5%20Image%20Captioning%20-%20Visual%20Attention) using InceptionResNetV2 and visual attention.
 
-2. **[Image Transformer](https://arxiv.org/abs/1802.05751) 2018:**
+3. **[Image Transformer](https://arxiv.org/abs/1802.05751) 2018:**
    - The authors extend the transformer architecture, initially designed for sequence-to-sequence tasks in NLP, to process images. The key idea is to treat the image as a 1D sequence of fixed-size patches, similarly to how words in a sentence are treated. 
    - It showcases the effectiveness of transformer-based architectures on image-based tasks, beyond traditional tasks like NLP.
 
-3. **[ViLBERT](https://arxiv.org/abs/1908.02265) 2019**:
+4. **[ViLBERT](https://arxiv.org/abs/1908.02265) 2019**:
    - ViLBERT (Vision-and-Language Bidirectional Encoder Representations from Transformers) aims to learn task-agnostic visiolinguistic representations that can be fine-tuned for various downstream tasks like image captioning and VQA. 
    - It extends BERT architecture to a multi-modal two-stream model, processing both visual and textual inputs in separate streams that interact through co-attentional transformer layers.
    - The model uses Faster [R-CNN (2018)](https://arxiv.org/abs/1506.01497) to extract regional visual features.
    - This work is a significant milestone in bridging the gap between image and text.
 
-4. **[An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929) (a.k.a Vision Transformer) 2020**:
+5. **[An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929) (a.k.a Vision Transformer) 2020**:
    - Vision Transformer (ViT) is similar to 'Image Transformer' in the sense they both used transformer to analyze the image, but it takes a different approach by treating the entire image as a sequence of fixed-size non-overlapping patches, aiming to capture both local and global spatial dependencies in the image.
    - ViT did not replace CNNs but rather provided an additional tool in the toolbox for researchers.
    - According to this Medium article [CNNs vs ViT](https://medium.com/@faheemrustamy/vision-transformers-vs-convolutional-neural-networks-5fe8f9e18efc), ViT could outperform CNNs given large dataset, but it is much more resource-intensive process than CNNs. 
 
-5. **[SOHO](https://arxiv.org/abs/2104.03135) 2021**:
+6. **[SOHO](https://arxiv.org/abs/2104.03135) 2021**:
    - Seeing Out of tHe bOx (SOHO) proposes a solution to common limitations of region-based image features:
      - It can detect objects but may not capture the context, which can lead to misunderstandings. 
      - Object detection is limited to its number of pre-defined features in the model.
