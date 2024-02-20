@@ -20,25 +20,42 @@ A VLM typically consists of 3 key elements:
    - It consists of VGGNet (a type of CNN network) as the image encoder and LSTM as the question text encoder. The visual and textual features are then combined using Element-wise Multiplication.
    - This study introduced the visual-question answering task, released a benchmark dataset (the VQA dataset) for future VQA models, and demonstrated the effectiveness of multimodal fusion techniques for integrating visual and textual information in a unified framework.
 
-2. **[Show and Tell](https://arxiv.org/abs/1502.03044)** 2015:
+   
+   <img src="readme_images/vqa_model.png" height="200">
+
+
+2. **[Show and Tell](https://arxiv.org/abs/1411.4555)** 2015:
    - The image features are extracted using a Convolutional Neural Network (CNN) as an encoder, and a Long Short-Term Memory (LSTM) network is employed as a decoder to generate the sequential captions. 
    - Similarly, in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044), an attention mechanism is used to dynamically focusing on different parts of the image, improving the model's ability to capture finer details. 
    - I implemented a similar architecture [here](https://github.com/Juhyung8371/AI-Projects/tree/main/Generative%20AI/5%20Image%20Captioning%20-%20Visual%20Attention) using InceptionResNetV2 and visual attention.
 
+
+   <img src="readme_images/showattentionandtell_model.png" height="200">
+
+
 3. **[Image Transformer](https://arxiv.org/abs/1802.05751) 2018:**
    - The authors extend the transformer architecture, initially designed for sequence-to-sequence tasks in NLP, to process images. The key idea is to treat the image as a 1D sequence of fixed-size patches, similarly to how words in a sentence are treated. 
-   - It showcases the effectiveness of transformer-based architectures on image-based tasks, beyond traditional tasks like NLP.
+   - It showcases the effectiveness of transformer-based architectures on image-based tasks (image generation and image super-resolution in this case), beyond traditional tasks like NLP.
 
 4. **[ViLBERT](https://arxiv.org/abs/1908.02265) 2019**:
-   - ViLBERT (Vision-and-Language Bidirectional Encoder Representations from Transformers) aims to learn task-agnostic visiolinguistic representations that can be fine-tuned for various downstream tasks like image captioning and VQA. 
+   - ViLBERT (Vision-and-Language Bidirectional Encoder Representations from Transformers) aims to learn task-agnostic visiolinguistic representations that can be fine-tuned for various downstream tasks like image captioning, visual commonsense reasoning, and VQA. 
+   - The model uses a combination of Masked-Language Modeling (MLM) and Image-Text Matching (ITM) objectives to enable said downstream tasks. 
    - It extends BERT architecture to a multi-modal two-stream model, processing both visual and textual inputs in separate streams that interact through co-attentional transformer layers.
-   - The model uses Faster [R-CNN (2018)](https://arxiv.org/abs/1506.01497) to extract regional visual features.
+   - The model uses the [Faster R-CNN (2018)](https://arxiv.org/abs/1506.01497) to extract regional visual features.
    - This work is a significant milestone in bridging the gap between image and text.
 
-5. **[An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929) (a.k.a Vision Transformer) 2020**:
-   - Vision Transformer (ViT) is similar to 'Image Transformer' in the sense they both used transformer to analyze the image, but it takes a different approach by treating the entire image as a sequence of fixed-size non-overlapping patches, aiming to capture both local and global spatial dependencies in the image.
+
+   <img src="readme_images/vilbert_model.png" height="150">
+
+
+5. **[ViT](https://arxiv.org/abs/2010.11929) 2020**:
+   - Vision Transformer (ViT) treats the entire image as a sequence of fixed-size non-overlapping patches, aiming to capture both local and global spatial dependencies in the image.
    - ViT did not replace CNNs but rather provided an additional tool in the toolbox for researchers.
    - According to this Medium article [CNNs vs ViT](https://medium.com/@faheemrustamy/vision-transformers-vs-convolutional-neural-networks-5fe8f9e18efc), ViT could outperform CNNs given large dataset, but it is much more resource-intensive process than CNNs. 
+
+
+   <img src="readme_images/vit_model.png" height="250">
+
 
 6. **[SOHO](https://arxiv.org/abs/2104.03135) 2021**:
    - Seeing Out of tHe bOx (SOHO) proposes a solution to common limitations of region-based image features:
@@ -48,6 +65,42 @@ A VLM typically consists of 3 key elements:
    - SOHO leverages a trainable CNN visual encoder (ResNet), which takes the whole image as input and produces visual features in image-level instead of region-level. 
    - Then it assigns visual words from the Visual Dictionary to different regions or segments within the image. The model learns to predict object boundaries based on the distribution of visual words in the image, enabling more accurate and fine-grained object detection results.
    - SOHO represents objects in images using object boundaries, facilitating more accurate and context-aware visual-text operations.
+
+
+   <img src="readme_images/soho_model.png" height="250">
+
+
+7. **[CLIP](https://arxiv.org/abs/2103.00020) 2021**:
+   - Contrastive Language–Image Pre-training (CLIP) uses contrastive learning strategy, a method to learn how to recognize the similarities and differences between data, to pre-train the model. 
+   - It jointly trains the image encoder (ViT) and text encoder (BERT) by putting the images and texts in a shared embedding space and putting like pairs closer to each other.  
+   - It can effectively caption the semantic gap/relationship - demonstrating remarkable performance on tasks such as zero-shot image classification and natural language-based image retrieval.
+   - Read more about CLIP in this [article](https://viso.ai/deep-learning/clip-machine-learning/).
+   
+
+   <img src="readme_images/clip_model.png" height="250">
+
+
+8. **[LiT](https://arxiv.org/abs/2111.07991) 2021**:
+   - This paper proposes a Locked-image Tuning (LiT) strategy, which utilizes contrastive learning method like CLIP, but it only fine-tunes the text encoder while the image encoder is locked (not learning).
+   - By locking the image encoder, LiT preserves the pre-trained visual data, reduces overfitting, prevents catastrophic forgetting of image data, and saves resources required for training the image encoder, which is not small in multimodal training. 
+   - LiT is particularly strong for unlabeled data, making it a valuable tool for zero-shot transfer learning.
+
+9. **[SimVLM](https://arxiv.org/abs/2108.10904) 2022**:
+   - Simple Visual Language Model (SimVLM) proposes a minimalist pre-training framework which exploits large-scale weak supervision to reduce training complexity. It is trained [end-to-end](https://www.baeldung.com/cs/end-to-end-deep-learning) with a single prefix language modeling objective.
+   - In this model, images and some beginning texts are considered as prefix for their rest of textual descriptions, enabling bidirectional attention for the prefix and autoregressive learning on the rest of text. 
+   - The model's backbone is the transformer architecture, where the image feature extraction is a combination of ViT and ResNet, inspired by [CoAtNet](https://arxiv.org/abs/2106.04803).
+   - This model is very powerful in image captioning and VQA tasks. But it is important to note that model that solely relies on PrefixLM may struggle to adapt to other downstream tasks like object detection. 
+
+
+   <img src="readme_images/simvlm_model.png" height="250">
+
+
+10. [Flamingo](https://arxiv.org/abs/2204.14198) 2022
+11. [CoCa](https://arxiv.org/abs/2205.01917) 2022 
+12. [GIT](https://arxiv.org/abs/2205.14100) 2022 
+13. [BLIP](https://arxiv.org/abs/2201.12086) 2022 and [BLIP2](https://arxiv.org/abs/2301.12597) 2023
+14. [PaLI](https://arxiv.org/abs/2209.06794) 2022, [PaLI-3](https://arxiv.org/abs/2310.09199), and a [blog post](https://blog.research.google/2022/09/pali-scaling-language-image-learning-in.html)
+
 
 [//]: # ()
 [//]: # (https://huggingface.co/blog/vision_language_pretraining)
@@ -63,19 +116,12 @@ A VLM typically consists of 3 key elements:
 
 [//]: # ([paper with code image captioning comparison]&#40;https://paperswithcode.com/task/image-captioning&#41;)
 
-[//]: # ()
-[//]: # (Microsoft)
-
-[//]: # ([GIT]&#40;https://arxiv.org/abs/2205.14100&#41;)
-
 [//]: # ([Hugging Face's GIT-bBase implementation]&#40;https://huggingface.co/docs/transformers/model_doc/git&#41;)
 
 [//]: # (GIT-Base is 129M parameters)
 
 [//]: # ()
 [//]: # (SalesForce)
-
-[//]: # ([BLIP-2]&#40;https://arxiv.org/abs/2301.12597&#41;)
 
 [//]: # ([Hugging Face's BLIP-2 implementation]&#40;https://huggingface.co/docs/transformers/model_doc/blip-2&#41;)
 
@@ -114,9 +160,9 @@ The save format is HuggingFace's `ImageFolder` caption dataset generation method
 
 ```
 file_name,additional_feature
-0001.png,This is a first value of a text feature you added to your images
-0002.png,This is a second value of a text feature you added to your images
-0003.png,This is a third value of a text feature you added to your images
+0001.png,First caption text
+0002.png,Second caption text
+0003.png,Third caption text
 ```
 
 ## Data Ethics
