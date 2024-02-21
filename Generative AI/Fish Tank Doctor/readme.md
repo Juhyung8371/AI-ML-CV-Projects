@@ -85,7 +85,16 @@ A VLM typically consists of 3 key elements:
    - By locking the image encoder, LiT preserves the pre-trained visual data, reduces overfitting, prevents catastrophic forgetting of image data, and saves resources required for training the image encoder, which is not small in multimodal training. 
    - LiT is particularly strong for unlabeled data, making it a valuable tool for zero-shot transfer learning.
 
-9. **[SimVLM](https://arxiv.org/abs/2108.10904) 2022**:
+9. **[Frozen](https://arxiv.org/abs/2106.13884) 2021**:
+   - Frozen is the pioneering work in the in-context few-shot learning topic. 
+   - It uses Frozen PrefixLM technique where the language model (transformer-based) is frozen (not learning) and only the vision encoder (NF-ResNet-50 model) is updated. The visual data is used as the prefix of the text data in the training process.
+   - By freezing the language models during training, the model benefits from the rich semantic information encoded in the pretrained language model weights.
+
+
+   <img src="readme_images/frozen_model.png" height="200">
+
+
+10. **[SimVLM](https://arxiv.org/abs/2108.10904) 2021**:
    - Simple Visual Language Model (SimVLM) proposes a minimalist pre-training framework which exploits large-scale weak supervision to reduce training complexity. It is trained [end-to-end](https://www.baeldung.com/cs/end-to-end-deep-learning) with a single prefix language modeling objective.
    - In this model, images and some beginning texts are considered as prefix for their rest of textual descriptions, enabling bidirectional attention for the prefix and autoregressive learning on the rest of text. 
    - The model's backbone is the transformer architecture, where the image feature extraction is a combination of ViT and ResNet, inspired by [CoAtNet](https://arxiv.org/abs/2106.04803).
@@ -95,7 +104,14 @@ A VLM typically consists of 3 key elements:
    <img src="readme_images/simvlm_model.png" height="250">
 
 
-10. [Flamingo](https://arxiv.org/abs/2204.14198) 2022
+10. **[Flamingo](https://arxiv.org/abs/2204.14198) 2022**:
+   - To address the challenges associated with information lost during fine-tuning step, Flamingo freezes both pre-trained visual and textual encoders, and inserts gated cross-attention modules to bridge these two frozen models.
+   - The Perceiver Resampler modules is used reduce the complexity of vision-text cross-attention by taking the images or video features from the vision encoder and produces a fixed number of visual tokens.
+   - Flamingo sets a new state-of-the-art in few-shot learning on a wide range of open-ended vision and language tasks
+
+   <img src="readme_images/flamingo_model.png" height="250">
+
+
 11. [CoCa](https://arxiv.org/abs/2205.01917) 2022 
 12. [GIT](https://arxiv.org/abs/2205.14100) 2022 
 13. [BLIP](https://arxiv.org/abs/2201.12086) 2022 and [BLIP2](https://arxiv.org/abs/2301.12597) 2023
