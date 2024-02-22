@@ -19,19 +19,17 @@ A VLM typically consists of 3 key elements:
    - VQA aims to answer open-ended and free-form questions, unlike older works such as [this paper](https://arxiv.org/abs/1410.0210), which limited the object category to 894 pre-defined objects and [this paper](https://www.researchgate.net/publication/273387445_Visual_Turing_test_for_computer_vision_systems) which has a set of questions four possible categories.
    - It consists of VGGNet (a type of CNN network) as the image encoder and LSTM as the question text encoder. The visual and textual features are then combined using Element-wise Multiplication.
    - This study introduced the visual-question answering task, released a benchmark dataset (the VQA dataset) for future VQA models, and demonstrated the effectiveness of multimodal fusion techniques for integrating visual and textual information in a unified framework.
-
    
+   <br>
    <img src="readme_images/vqa_model.png" height="200">
-
 
 2. **[Show and Tell](https://arxiv.org/abs/1411.4555)** 2015:
    - The image features are extracted using a Convolutional Neural Network (CNN) as an encoder, and a Long Short-Term Memory (LSTM) network is employed as a decoder to generate the sequential captions. 
    - Similarly, in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044), an attention mechanism is used to dynamically focus on different parts of the image, improving the model's ability to capture finer details. 
    - I implemented a similar architecture [here](https://github.com/Juhyung8371/AI-Projects/tree/main/Generative%20AI/5%20Image%20Captioning%20-%20Visual%20Attention) using InceptionResNetV2 and visual attention.
-
-
+   
+   <br>
    <img src="readme_images/showattentionandtell_model.png" height="200">
-
 
 3. **[Image Transformer](https://arxiv.org/abs/1802.05751) 2018:**
    - The authors extend the transformer architecture, initially designed for sequence-to-sequence tasks in NLP, to process images. The key idea is to treat the image as a 1D sequence of fixed-size patches, similar to how words in a sentence are treated. 
@@ -43,19 +41,18 @@ A VLM typically consists of 3 key elements:
    - It extends BERT architecture to a multi-modal two-stream model, processing both visual and textual inputs in separate streams that interact through co-attentional transformer layers.
    - The model uses the [Faster R-CNN (2018)](https://arxiv.org/abs/1506.01497) to extract regional visual features.
    - This work is a significant milestone in bridging the gap between image and text.
-
-
+   
+   <br>
    <img src="readme_images/vilbert_model.png" height="150">
 
-
 5. **[ViT](https://arxiv.org/abs/2010.11929) 2020**:
+   - ViT challenges the dominance of CNNs in image recognition tasks, and made significant impact in the computer vision field. It did not replace CNNs but rather provided an additional tool in the toolbox for researchers.
+   - The principles ViT introduced have inspired the development of hybrid models that combine vision and language processing, contributing to advancements in multimodal tasks.
    - Vision Transformer (ViT) treats the entire image as a sequence of fixed-size non-overlapping patches, aiming to capture both local and global spatial dependencies in the image.
-   - ViT did not replace CNNs but rather provided an additional tool in the toolbox for researchers.
    - According to this Medium article [CNNs vs ViT](https://medium.com/@faheemrustamy/vision-transformers-vs-convolutional-neural-networks-5fe8f9e18efc), ViT could outperform CNNs given large dataset, but it is much more resource-intensive process than CNNs. 
-
-
+   
+   <br>
    <img src="readme_images/vit_model.png" height="250">
-
 
 6. **[SOHO](https://arxiv.org/abs/2104.03135) 2021**:
    - Seeing Out of tHe bOx (SOHO) proposes a solution to common limitations of region-based image features:
@@ -65,10 +62,9 @@ A VLM typically consists of 3 key elements:
    - SOHO leverages a trainable CNN visual encoder (ResNet), which takes the whole image as input and produces visual features at image-level instead of region-level. 
    - Then, it assigns visual words from the Visual Dictionary to different regions or segments within the image. The model learns to predict object boundaries based on the distribution of visual words in the image, enabling more accurate and fine-grained object detection results.
    - SOHO represents objects in images using object boundaries, facilitating more accurate and context-aware visual-text operations.
-
-
+   
+   <br>
    <img src="readme_images/soho_model.png" height="250">
-
 
 7. **[CLIP](https://arxiv.org/abs/2103.00020) 2021**:
    - Contrastive Language–Image Pre-training (CLIP) uses a contrastive learning strategy to learn how to recognize the similarities and differences between data to pre-train the model. 
@@ -76,9 +72,8 @@ A VLM typically consists of 3 key elements:
    - It can effectively caption the semantic gap/relationship - demonstrating remarkable performance on tasks such as zero-shot image classification and natural language-based image retrieval.
    - Read more about CLIP in this [article](https://viso.ai/deep-learning/clip-machine-learning/).
    
-
+   <br>
    <img src="readme_images/clip_model.png" height="250">
-
 
 8. **[LiT](https://arxiv.org/abs/2111.07991) 2021**:
    - This paper proposes a Locked-image Tuning (LiT) strategy, which utilizes contrastive learning methods like CLIP, but it only fine-tunes the text encoder while the image encoder is locked (not learning).
@@ -89,10 +84,9 @@ A VLM typically consists of 3 key elements:
    - Frozen is the pioneering work in the in-context few-shot learning topic. 
    - It uses the Frozen PrefixLM technique where the language model (transformer-based) is frozen (not learning), and only the vision encoder (NF-ResNet-50 model) is updated. The visual data is used as the prefix of the text data in the training process.
    - By freezing the language models during training, the model benefits from the rich semantic information encoded in the pre-trained language model weights.
-
-
+   
+   <br>
    <img src="readme_images/frozen_model.png" height="200">
-
 
 10. **[SimVLM](https://arxiv.org/abs/2108.10904) 2021**:
    - The Simple Visual Language Model (SimVLM) proposes a minimalist pre-training framework that exploits large-scale weak supervision to reduce training complexity. It is trained [end-to-end](https://www.baeldung.com/cs/end-to-end-deep-learning) with a single prefix language modeling objective.
@@ -100,22 +94,38 @@ A VLM typically consists of 3 key elements:
    - The model's backbone is the transformer architecture, where the image feature extraction is a combination of ViT and ResNet, inspired by [CoAtNet](https://arxiv.org/abs/2106.04803).
    - This model is very powerful in image captioning and VQA tasks. However, it is important to note that a model solely relying on PrefixLM may struggle to adapt to other downstream tasks like object detection. 
 
-
+   <br>
    <img src="readme_images/simvlm_model.png" height="250">
 
-
-10. **[Flamingo](https://arxiv.org/abs/2204.14198) 2022**:
+11. **[Flamingo](https://arxiv.org/abs/2204.14198) 2022**:
    - To address the challenges associated with information lost during the fine-tuning step, Flamingo freezes both pre-trained visual and textual encoders and inserts gated cross-attention modules to bridge these two frozen models.
    - The Perceiver Resampler module is used to reduce the complexity of vision-text cross-attention by taking the images or video features from the vision encoder and producing a fixed number of visual tokens.
-   - Flamingo sets a new state-of-the-art in few-shot learning on a wide range of open-ended vision and language tasks
-
+   - Flamingo sets a new state-of-the-art in few-shot learning on a wide range of open-ended vision and language tasks by leveraging a 70B-sized frozen language model (contemporary model sizes are from 1B to 5B).
+   
+   <br>
    <img src="readme_images/flamingo_model.png" height="250">
 
+12. **[CoCa](https://arxiv.org/abs/2205.01917) 2022**:
+    - Contrastive Captioner (CoCa) efficiently combines contrastive and captioning objectives with Selective Cross-Attention Mechanism where we omit the cross-attention in first half of the text decoder layers to encode unimodal text representations, and cascades the remaining decoder layers for multimodal image-text representations. 
+    - The two training objectives are computed efficiently with minimal overhead by sharing the same computational graph.
+    - This work bridges the gap among various pretraining approaches by proposing said strategies. 
+    
+   <br>
+   <img src="readme_images/coca_model.png" height="250">
 
-11. [CoCa](https://arxiv.org/abs/2205.01917) 2022 
-12. [GIT](https://arxiv.org/abs/2205.14100) 2022 
-13. [BLIP](https://arxiv.org/abs/2201.12086) 2022 and [BLIP2](https://arxiv.org/abs/2301.12597) 2023
-14. [PaLI](https://arxiv.org/abs/2209.06794) 2022, [PaLI-3](https://arxiv.org/abs/2310.09199), and a [blog post](https://blog.research.google/2022/09/pali-scaling-language-image-learning-in.html)
+13. **[GIT](https://arxiv.org/abs/2205.14100) 2022**:
+   - The Generative Image-to-text Transformer's (GIT) uniqueness lies in its simplicity, generative nature, and scalability, which led to its state-of-the-art performance across various vision-language tasks.
+   - GIT consists of only one image encoder and a text decoder under a single langauge modeling task. This architecture is much simpler compared to existing works, which typically contain complex structures (uni/multi-modal encoder/decoder) and depends on external modules such as object detectors/taggers and optical character recognition.
+   - GIT adopts a generative approach to tackle vision-language tasks as opposed to more common classification or detection frameworks. This approach provides a consistent network architecture between pre-training and fine-tuning stages, simplifying the model. It generates text directly based on the images or video inputs, facilitating a more unified method for handling various tasks without needing task-specific adaptations. This innovative application showcases the robustness of generating descriptive or explanatory text for images over identifying labels. 
+   - GIT adopts a large contrastively pre-trained image encoder with a relatively small, randomly initialized text decoder. Also, it uses the generation task to pre-train both the image encoder and text decoder.
+   - GIT can scale up both the model size and the pre-training data to enhance the model's performance significantly. The image encoder is based on CLIP/ViT-B for GIT base (size 129M), CLIP/ViT-L for GIT large (size 347M), Florence for GIT (size 681M), and [DaViT](https://arxiv.org/abs/2204.03645) for GIT2 (size 5.1B).
+
+
+   <br>
+   <img src="readme_images/git_model.png" height="250">
+
+14. [BLIP](https://arxiv.org/abs/2201.12086) 2022 and [BLIP2](https://arxiv.org/abs/2301.12597) 2023
+15. [PaLI](https://arxiv.org/abs/2209.06794) 2022, [PaLI-3](https://arxiv.org/abs/2310.09199), and a [blog post](https://blog.research.google/2022/09/pali-scaling-language-image-learning-in.html)
 
 
 [//]: # ()
